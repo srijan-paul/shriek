@@ -1,17 +1,17 @@
 local Sprite = class("Sprite")
 
-function Sprite:init(owner, texture)
+function Sprite:init(owner, drawable)
 	self.owner = owner
 	self.world = self.owner.world
-	self.image = texture
-	self.width = texture:getWidth()
-	self.height = texture:getHeight()
+	self.image = drawable
+	self.width = drawable:getWidth()
+	self.height = drawable:getHeight()
 	self.owner.world:add_drawable(self)
-	self.visible = true
+	self.is_visible = true
 end
 
 function Sprite:draw()
-	if not self.visible then
+	if not self.is_visible then
 		return
 	end
 
@@ -25,7 +25,6 @@ function Sprite:draw()
 	if t.scale.x < 0 then
 		x = x + self.width * -1 * t.scale.x
 	end
-
 	love.graphics.draw(self.image, x, y, t.rotation, t.scale.x, t.scale.y)
 end
 

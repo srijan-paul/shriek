@@ -3,6 +3,9 @@ _G.lg = love.graphics
 _G.lk = love.keyboard
 _G.lm = love.mouse
 
+-- more global libraries
+_G.Moan = require "lib.moan.moan"
+
 -- configuration settings go here:
 
 -- width and height of the window
@@ -72,6 +75,11 @@ function love.load()
 	_G.Input = require "lib.boipushy.input"()
 	Resource.load()
 	game.load()
+
+	Moan.typeSound = Resource.Sfx.Type
+	Moan.font = Resource.Font.dialog
+	Moan.speak("Test",
+			{"Wow this house is really scary, mom pick me up I'm scared. :("})
 end
 
 local main_canvas = love.graphics.newCanvas()
@@ -87,9 +95,16 @@ function love.draw()
 	love.graphics.setShader(shader)
 	lg.draw(main_canvas, SCREEN_OFFSET_X, 0, 0, display_scale, display_scale)
 	love.graphics.setShader()
+
+	Moan.draw()
 	draw_cursor()
 end
 
 function love.update(dt)
+	Moan.update(dt)
 	game.update(dt)
+end
+
+function love.keyreleased(key)
+	Moan.keyreleased(key)
 end

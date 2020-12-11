@@ -5,7 +5,6 @@ _G.Vec2 = require("lib/vector2")
 _G.class = require("lib/middleclass/middleclass")
 _G.random = math.random
 _G.sugar = require("lib/sugar")
--- _G.ECS = require("lib/concord")
 
 -- Direction enum, very common in games.
 _G.Direction = {LEFT = 1, RIGHT = 2, UP = 3, DOWN = 4}

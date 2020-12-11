@@ -6,6 +6,7 @@ local Player = require "prefabs.player"
 
 -- temporary imports
 local Wall = require "prefabs.wall"
+local Object = require "prefabs.interactable"
 
 local ZOOM = 4.0
 function Room:init()
@@ -15,6 +16,7 @@ function Room:init()
 	--   temporary code
 	self.player = Player(self.world, 100, 100, {sprite = Resource.Sprite.Box})
 	Wall(self.world, 0, 0, 128, 23)
+	Object(self.world, 95, 10, {target = self.player, size = 30})
 	-- / temporary code
 end
 

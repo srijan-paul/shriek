@@ -1,6 +1,6 @@
 local janim = require "lib.janim"
 
-local Resource = {Sprite = {}, Sfx = {}}
+local Resource = {Sprite = {}, Sfx = {}, Canvases = {}, Font = {}}
 
 local la = love.audio
 
@@ -12,7 +12,19 @@ function Resource.load()
 	local sfx = Resource.Sfx
 	sfx.Steps = {}
 	sfx.Steps.Wood = la.newSource("assets/sound/wood02.ogg", "static")
+	sfx.Type = la.newSource("assets/sound/type.wav", "static")
 
+	local rc = Resource.Canvases
+	rc.interact_btn = lg.newCanvas(10, 10)
+	rc.interact_btn:renderTo(function()
+		lg.setColor(1, 1, 1)
+		lg.rectangle("fill", 0, 0, 10, 10)
+		-- lg.setColor(1, 1, 1)
+		-- lg.print("E", 3, 3)
+	end)
+
+	local rf = Resource.Font
+	rf.dialog = lg.newFont("assets/font/prstartk.ttf", 10)
 end
 
 return Resource
