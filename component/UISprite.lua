@@ -14,8 +14,6 @@ function UISprite:draw()
 	if not self.is_visible then
 		return
 	end
-
-	local zoom = camera:get_zoom()
 	local t = assert(self.owner.transform, "no transform on owner")
 	local dp = Vec2(0, 0)
 	local x = t.pos.x - dp.x

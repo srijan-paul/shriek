@@ -13,6 +13,8 @@ function Interactable:init(world, x, y, config)
 	self.btn.is_visible = false
 	self.callback = nil
 	self.is_player_close = false
+	-- if this is true then the callback isn't even
+	-- when the player is close and presses the Interact button.
 	self.is_callback_running = false
 end
 
@@ -20,8 +22,7 @@ function Interactable:_physics_process(_)
 	local dist = (self.target:get_pos() - self:get_pos()):mag()
 	if dist < self.radius then
 		if self.is_player_close then
-			if love.keyboard.isDown("e") and not self.is_callback_running and
-					self.callback then
+			if lk.isDown("e") and not self.is_callback_running and self.callback then
 				DialogManager:start(self.callback, self)
 			end
 			return

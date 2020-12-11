@@ -15,15 +15,10 @@ function Resource.load()
 	sfx.Type = la.newSource("assets/sound/type.wav", "static")
 
 	local rf = Resource.Font
-	rf.dialog = lg.newFont("assets/font/prstartk.ttf", 14)
+	rf.dialog = lg.newFont("assets/font/VCR_OSD_MONO_1.001.ttf", 22)
 
 	local rc = Resource.Canvases
-	rc.interact_btn = lg.newCanvas(200, 30)
-	rc.interact_btn:renderTo(function()
-		lg.setColor(1, 1, 1)
-		lg.setFont(rf.dialog, 4)
-		lg.print("Interact", 0, 0)
-	end)
+	rc.interact_btn = lg.newText(rf.dialog, "Interact")
 
 end
 
