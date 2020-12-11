@@ -16,6 +16,7 @@ function World:init(width, height)
 	self.particle_manager = Particles.Manager()
 	self.drawables = {}
 	self.entities = {}
+	self.ui_drawbales = {}
 
 	self.grid = Grid(self, 5, 5)
 
@@ -45,6 +46,12 @@ function World:draw()
 	-- * / DEBUG CODE
 end
 
+function World:ui_layer()
+	for _, ui_el in ipairs(self.ui_drawbales) do
+		ui_el:draw()
+	end
+end
+
 -- remove all 'dead' gameobjects/entities
 -- from the entities array. Does the same for all 
 -- drawables.
@@ -62,6 +69,14 @@ function World:clear_garbage()
 		if e._delete_flag then
 			tremove(self.entities, i)
 			e._delete_flag = false
+		end
+	end
+
+	for i = #self.ui_drawbales, 1, -1 do
+		local d = self.drawables[i]
+		if d._delete_flag then
+			tremove(self.drawables, i)
+			d._delete_flag = false
 		end
 	end
 end
@@ -126,7 +141,15 @@ end
 function World:add_drawable(d)
 	-- TODO: after depth sorting, change this logic
 	--  to insert in sorted array
-	table.insert(self.drawables, d)
+	tinsert(self.drawables, d)
+end
+
+function World:add_ui_element(el)
+	tinsert(self.ui_drawbales, el)
+end
+
+function World:remove_ui_element(el)
+	el._delete_flag = true
 end
 
 function World:add_gameobject(e)

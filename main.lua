@@ -78,8 +78,6 @@ function love.load()
 
 	Moan.typeSound = Resource.Sfx.Type
 	Moan.font = Resource.Font.dialog
-	Moan.speak("Test",
-			{"Wow this house is really scary, mom pick me up I'm scared. :("})
 end
 
 local main_canvas = love.graphics.newCanvas()
@@ -97,6 +95,7 @@ function love.draw()
 	love.graphics.setShader()
 
 	Moan.draw()
+	game.ui_layer()
 	draw_cursor()
 end
 

@@ -16,7 +16,12 @@ function Room:init()
 	--   temporary code
 	self.player = Player(self.world, 100, 100, {sprite = Resource.Sprite.Box})
 	Wall(self.world, 0, 0, 128, 23)
-	Object(self.world, 95, 10, {target = self.player, size = 30})
+	local photo = Object(self.world, 95, 10, {target = self.player, size = 30})
+	photo:on_trigger(function()
+		Say {"You", "wow that's a nice picture !"}
+		Say {"Photo", "I agree!"}
+		Say {"You", "Did the photo just talk !?"}
+	end)
 	-- / temporary code
 end
 
@@ -25,6 +30,10 @@ function Room:draw()
 	lg.draw(Resource.Sprite.RoomBg, 0, 0)
 	self.world:draw()
 	camera:unset()
+end
+
+function Room:ui_layer()
+	self.world:ui_layer()
 end
 
 function Room:update(dt)

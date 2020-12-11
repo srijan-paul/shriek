@@ -14,17 +14,17 @@ function Resource.load()
 	sfx.Steps.Wood = la.newSource("assets/sound/wood02.ogg", "static")
 	sfx.Type = la.newSource("assets/sound/type.wav", "static")
 
+	local rf = Resource.Font
+	rf.dialog = lg.newFont("assets/font/prstartk.ttf", 14)
+
 	local rc = Resource.Canvases
-	rc.interact_btn = lg.newCanvas(10, 10)
+	rc.interact_btn = lg.newCanvas(200, 30)
 	rc.interact_btn:renderTo(function()
 		lg.setColor(1, 1, 1)
-		lg.rectangle("fill", 0, 0, 10, 10)
-		-- lg.setColor(1, 1, 1)
-		-- lg.print("E", 3, 3)
+		lg.setFont(rf.dialog, 4)
+		lg.print("Interact", 0, 0)
 	end)
 
-	local rf = Resource.Font
-	rf.dialog = lg.newFont("assets/font/prstartk.ttf", 10)
 end
 
 return Resource

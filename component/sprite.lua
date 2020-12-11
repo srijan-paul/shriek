@@ -15,8 +15,8 @@ function Sprite:draw()
 		return
 	end
 
-	assert(self.owner.transform, "no transform component on sprite component owner")
-	local t = self.owner.transform
+	local t = assert(self.owner.transform,
+			"no transform component on sprite component owner")
 
 	local dp = Vec2(self.width / 2, self.height / 2):rotated(t.rotation)
 	local x = t.pos.x - dp.x
