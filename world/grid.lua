@@ -19,7 +19,7 @@ function Grid:init(world, rows, cols)
 end
 
 function Grid:insert(collider)
-	local pos = collider:get_pos()
+	local pos = collider:topleft()
 	local row, col = self:toRowCol(pos.x, pos.y)
 	local endRow, endCol = self:toRowCol(pos.x + collider.width,
 			pos.y + collider.height)
@@ -88,7 +88,7 @@ function Grid:process_collision(c1, c2)
 	end
 
 	if Collider.checkAABB(a, b) then
-		a.owner:on_collide(b.owner, Collider.AABBdir(a, b))
+		a.owner:on_collide(b.owner, Collider.AABBdir(a, b), a, b)
 	end
 end
 

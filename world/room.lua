@@ -4,6 +4,9 @@ local camera = require "camera"
 local Prop = require "prefabs.prop"
 local Player = require "prefabs.player"
 
+-- temporary imports
+local Wall = require "prefabs.wall"
+
 local ZOOM = 4.0
 function Room:init()
 	self.world = World(128, 128)
@@ -11,6 +14,7 @@ function Room:init()
 	camera:setPos(-30, -10)
 	--   temporary code
 	self.player = Player(self.world, 100, 100, {sprite = Resource.Sprite.Box})
+	Wall(self.world, 0, 0, 128, 23)
 	-- / temporary code
 end
 

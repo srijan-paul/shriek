@@ -28,20 +28,20 @@ function World:draw()
 	end
 	self.particle_manager:draw()
 	-- * DEBUG CODE
-	-- self.grid:draw()
+	self.grid:draw()
 
-	-- lg.setColor(1, 0, 0, 1)
+	lg.setColor(1, 0, 0, 1)
 
-	-- for i = 1, #self.entities do
-	-- 	local e = self.entities[i]
-	-- 	lg.setColor(1, 0.1, 0.1)
-	-- 	if e:has_component(cmp.Collider) then
-	-- 		e:get_component(cmp.Collider):draw()
-	-- 	end
-	-- end
+	for i = 1, #self.entities do
+		local e = self.entities[i]
+		lg.setColor(1, 0.1, 0.1)
+		if e:has_component(cmp.Collider) then
+			e:get_component(cmp.Collider):draw()
+		end
+	end
 
-	-- lg.setColor(1, 1, 1, 1)
-	-- love.graphics.rectangle("line", 0, 0, self.width, self.height)
+	lg.setColor(1, 1, 1, 1)
+	love.graphics.rectangle("line", 0, 0, self.width, self.height)
 	-- * / DEBUG CODE
 end
 

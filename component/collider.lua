@@ -46,36 +46,52 @@ function Collider:get_pos()
 	return t.pos + self.offset:rotated(t.rotation)
 end
 
+function Collider:topleft()
+	return self:get_pos() - Vec2(self.width / 2, self.height / 2)
+end
+
+function Collider:set_topleft(x, y)
+	self.owner:set_pos(Vec2(x, y) + Vec2(self.width / 2, self.height / 2))
+end
+
 function Collider.checkAABB(r1, r2)
 	-- get the top-right corner coordinates
 	-- from the transform's center coordinates.
-	local p1 = r1:get_pos() - Vec2(r1.width / 2, r1.height / 2)
-	local p2 = r2:get_pos() - Vec2(r2.width / 2, r2.height / 2)
+	local p1 = r1:topleft()
+	local p2 = r2:topleft()
 	return not ((p1.x > p2.x + r2.width) or (p1.x + r1.width < p2.x) or
        			(p1.y + r1.height < p2.y) or (p1.y > p2.y + r2.height))
 end
 
 function Collider.AABBdir(a, b)
-	local apos = a:get_pos()
-	local bpos = b:get_pos()
-	local dist = apos - bpos
+	local apos = a:topleft()
+	local bpos = b:topleft()
 
-	if math.abs(dist.x) == math.abs(dist.y) then
-		if dist.y > 0 then
-			return "down"
-		end
+	local a_bottom = apos.y + a.height
+	local a_right = apos.x + a.width
+	local b_bottom = bpos.y + b.height
+	local b_right = bpos.x + b.width
+
+	local top = a_bottom - bpos.y
+	local bottom = b_bottom - apos.y
+	local left = a_right - bpos.x
+	local right = b_right - apos.x
+
+	local min = math.min(bottom, right, top, left)
+
+	if top == min then
 		return "up"
-	elseif math.abs(dist.x) > math.abs(dist.y) then
-		if (dist.x > 0) then
-			return "right"
-		end
+	end
+
+	if bottom == min then
+		return "bottom"
+	end
+
+	if left == min then
 		return "left"
 	end
 
-	if dist.y > 0 then
-		return "down"
-	end
-	return "up"
+	return "right"
 end
 
 function Collider:draw()
