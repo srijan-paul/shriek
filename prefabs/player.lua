@@ -10,7 +10,8 @@ local State = {MOVE = 1, IDLE = 2}
 function Player:init(world, x, y)
 	Entt.init(self, world, x, y)
 	self:add_component(cmp.Collider, AABB_WIDTH, AABB_HEIGHT, "player")
-	self:add_component(cmp.Sprite, Resource.Sprite.Box)
+	self:add_component(cmp.AnimSprite, Resource.Sprite.Player,
+			{{"walk_down", 5, 8, 0.2, true}}):play("walk_down")
 	self.state = State.IDLE
 	self.footstep_audio = self:add_component(cmp.AudioPlayer,
 			Resource.Sfx.Steps.Wood, true)
