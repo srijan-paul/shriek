@@ -6,11 +6,13 @@ local Interactable = class("Interactable", Entt)
 
 function Interactable:init(world, x, y, config)
 	Entt.init(self, world, x, y)
-	self.target = config.target
+	self.target = config.target -- the player really.
 	self.radius = config.size
 
 	self.btn = self:add_component(UISprite, Resource.Canvases.interact_btn)
 	self.btn.is_visible = false
+	-- function called when the player presses the interact button
+	-- while standing in range of this object.
 	self.callback = nil
 	self.is_player_close = false
 	-- if this is true then the callback isn't even
@@ -35,6 +37,7 @@ function Interactable:_physics_process(_)
 	end
 end
 
+---@param fn function callback function.
 function Interactable:on_trigger(fn)
 	self.callback = fn
 end

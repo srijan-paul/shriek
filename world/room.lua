@@ -18,9 +18,7 @@ function Room:init()
 	Wall(self.world, 0, 0, 128, 23)
 	local photo = Object(self.world, 95, 10, {target = self.player, size = 30})
 	photo:on_trigger(function()
-		Say {"You", "wow that's a nice picture !"}
-		Say {"Photo", "I agree!"}
-		Say {"You", "Did the photo just talk !?"}
+		Say {"You", "How did this painting get covered in blood?"}
 	end)
 	-- / temporary code
 end
@@ -38,6 +36,9 @@ end
 
 function Room:update(dt)
 	self.world:update(dt)
+	local input_x = Input:keydown("d") - Input:keydown("a")
+	local input_y = Input:keydown("s") - Input:keydown("w")
+	self.player:handle_input(input_x, input_y)
 end
 
 ---returns the screen coordinates of the player

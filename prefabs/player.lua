@@ -18,18 +18,15 @@ function Player:init(world, x, y)
 	self.footstep_audio:set_volume(0.5)
 end
 
-function Player:update(dt)
-	Entt.update(self, dt)
-	local xvel = Input:keydown("d") - Input:keydown("a")
-	local yvel = Input:keydown("s") - Input:keydown("w")
-	local vel = Vec2(xvel, yvel) * MOVE_SPEED
+function Player:handle_input(x_dir, y_dir)
+	local vel = Vec2(x_dir, y_dir) * MOVE_SPEED
 
 	if vel.x ~= 0 or vel.y ~= 0 then
 		self.state = State.MOVE
-		-- self.footstep_audio:play()
+		self.footstep_audio:play()
 	else
 		self.state = State.IDLE
-		-- self.footstep_audio:pause()
+		self.footstep_audio:pause()
 	end
 
 	self:move(vel)
