@@ -6,7 +6,7 @@ local Player = require "prefabs.player"
 
 -- temporary imports
 local Wall = require "prefabs.wall"
-local Object = require "prefabs.interactable"
+local Interactable = require "prefabs.interactable"
 
 local ZOOM = 4.0
 function Room:init()
@@ -16,10 +16,19 @@ function Room:init()
 	--   temporary code
 	self.player = Player(self.world, 100, 100, {sprite = Resource.Sprite.Box})
 	Wall(self.world, 0, 0, 128, 23)
-	local photo = Object(self.world, 95, 10, {target = self.player, size = 30})
+	local photo = Interactable(self.world, 95, 10,
+			{target = self.player, size = 30})
 	photo:on_trigger(function()
 		Say {"You", "How did this painting get covered in blood?"}
 	end)
+
+	-- table
+	Prop(self.world, 21, 47, {collision = {width = 29, height = 16}})
+	-- box
+	Prop(self.world, 24, 106, {collision = {width = 14, height = 11}})
+	-- plant on round table
+	Prop(self.world, 95, 65, {collision = {width = 10, height = 8}})
+
 	-- / temporary code
 end
 

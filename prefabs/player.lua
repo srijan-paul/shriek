@@ -1,7 +1,8 @@
 local Entt = require "prefabs.entity"
 local cmp = require "component"
 
-local AABB_WIDTH, AABB_HEIGHT = 16, 16
+local AABB_WIDTH, AABB_HEIGHT = 7, 10
+local AABB_OFFSET = Vec2(1, 4)
 local MOVE_SPEED = 0.6
 local Player = class("Player", Entt)
 
@@ -9,7 +10,7 @@ local State = {MOVE = 1, IDLE = 2}
 
 function Player:init(world, x, y)
 	Entt.init(self, world, x, y)
-	self:add_component(cmp.Collider, AABB_WIDTH, AABB_HEIGHT, "player")
+	self:add_component(cmp.Collider, AABB_WIDTH, AABB_HEIGHT, "player", AABB_OFFSET)
 	self:add_component(cmp.AnimSprite, Resource.Sprite.Player,
 			{{"walk_down", 5, 8, 0.2, true}}):play("walk_down")
 	self.state = State.IDLE

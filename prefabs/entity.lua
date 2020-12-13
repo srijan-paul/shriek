@@ -127,4 +127,23 @@ function Entity:on_tile_collide(tile_pos)
 	-- override
 end
 
+---Resolves collision by placing the entity that owns collider `b`
+---outside the body of the entity that owns collider `a`. Direction
+---`dir` is the direction of collision from `b`'s perspective.
+function Entity.resolve_collision(a_collider, b_collider, dir)
+	if dir == "up" then
+		local y = a_collider:gety() + a_collider.height / 2 + b_collider.height / 2
+		b_collider:sety(y)
+	elseif dir == "down" then
+		local y = a_collider:gety() - a_collider.height / 2 - b_collider.height / 2
+		b_collider:sety(y)
+	elseif dir == "left" then
+		local x = a_collider:getx() + a_collider.width / 2 + b_collider.width / 2
+		b_collider:setx(x)
+	else
+		local x = a_collider:getx() - a_collider.width / 2 - b_collider.width / 2
+		b_collider:setx(x)
+	end
+end
+
 return Entity

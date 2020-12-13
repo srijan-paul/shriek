@@ -1,5 +1,6 @@
 local Entt = require "prefabs.entity"
 local UISprite = require "component.UISprite"
+local Collider = require "component.collider"
 local DialogManager = require "dialog"
 
 local Interactable = class("Interactable", Entt)
@@ -18,6 +19,13 @@ function Interactable:init(world, x, y, config)
 	-- if this is true then the callback isn't even
 	-- when the player is close and presses the Interact button.
 	self.is_callback_running = false
+
+	-- optional collider component.
+	if config.collider then
+		local offset = config.collider.offset or Vec2.ZERO()
+		self:add_component(Collider, assert(config.collider.width),
+				assert(config.collider.height), "object", offset):add_mask("player")
+	end
 end
 
 function Interactable:_physics_process(_)

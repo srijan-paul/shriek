@@ -16,7 +16,7 @@ function World:init(width, height)
 	self.particle_manager = Particles.Manager()
 	self.drawables = {}
 	self.entities = {}
-	self.ui_drawbales = {}
+	self.ui_drawables = {}
 
 	self.grid = Grid(self, 5, 5)
 
@@ -47,7 +47,7 @@ function World:draw()
 end
 
 function World:ui_layer()
-	for _, ui_el in ipairs(self.ui_drawbales) do
+	for _, ui_el in ipairs(self.ui_drawables) do
 		ui_el:draw()
 	end
 end
@@ -72,10 +72,10 @@ function World:clear_garbage()
 		end
 	end
 
-	for i = #self.ui_drawbales, 1, -1 do
-		local d = self.drawables[i]
+	for i = #self.ui_drawables, 1, -1 do
+		local d = self.ui_drawables[i]
 		if d._delete_flag then
-			tremove(self.drawables, i)
+			tremove(self.ui_drawables, i)
 			d._delete_flag = false
 		end
 	end
@@ -109,18 +109,25 @@ function World:bounds_check(e)
 	local collider = e:get_component(cmp.Collider)
 	local pos = collider:get_pos()
 
-	if pos.x < collider.width / 2 or pos.x > self.width - collider.width / 2 or
-			pos.y > self.height - collider.height / 2 or pos.y < collider.height / 2 then
-		local p = Vec2(sugar.clamp(pos.x, collider.width / 2,
-				self.width - collider.width / 2), sugar.clamp(pos.y, collider.height / 2,
-				self.height - collider.height / 2))
-		e:set_pos(p)
+	local check_left = pos.x < collider.width / 2
+	local check_right = pos.x > self.width - collider.width / 2
+
+	local check_top = pos.y > self.height - collider.height / 2
+	local check_bottom = pos.y < collider.height / 2
+
+	if check_left or check_right or check_top or check_bottom then
+		local x = sugar.clamp(pos.x, collider.width / 2,
+				self.width - collider.width / 2)
+
+		local y = sugar.clamp(pos.y, collider.height / 2,
+				self.height - collider.height / 2)
+		local p = Vec2(x, y)
+		collider:set_pos(p)
+
 		if collider.owner.on_world_exit then
 			collider.owner:on_world_exit()
-			return
 		end
 	end
-
 end
 
 function World:_physics_process(dt)
@@ -145,7 +152,7 @@ function World:add_drawable(d)
 end
 
 function World:add_ui_element(el)
-	tinsert(self.ui_drawbales, el)
+	tinsert(self.ui_drawables, el)
 end
 
 function World:remove_ui_element(el)

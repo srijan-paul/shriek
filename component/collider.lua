@@ -39,11 +39,36 @@ function Collider:add_masks(...)
 end
 
 function Collider:get_pos()
-	assert(self.owner:has_component(Transform),
-			"no transform component on collider parent")
 	-- transform is the center coordinate
-	local t = self.owner:get_component(Transform)
+	local t = assert(self.owner.transform,
+			"no transform component on collider parent")
 	return t.pos + self.offset:rotated(t.rotation)
+end
+
+function Collider:set_pos(p)
+	self.owner:set_pos(p - self:get_offset())
+end
+
+function Collider:get_offset()
+	return self.offset:rotated(assert(self.owner.transform).rotation)
+end
+
+function Collider:getx()
+	return self:get_pos().x
+end
+
+function Collider:gety()
+	return self:get_pos().y
+end
+
+function Collider:setx(x)
+	local xoff = self:get_offset().x
+	self.owner:setx(x - xoff)
+end
+
+function Collider:sety(y)
+	local yoff = self:get_offset().y
+	self.owner:sety(y - yoff)
 end
 
 function Collider:topleft()
@@ -73,18 +98,18 @@ function Collider.AABBdir(a, b)
 	local b_right = bpos.x + b.width
 
 	local top = a_bottom - bpos.y
-	local bottom = b_bottom - apos.y
+	local down = b_bottom - apos.y
 	local left = a_right - bpos.x
 	local right = b_right - apos.x
 
-	local min = math.min(bottom, right, top, left)
+	local min = math.min(down, right, top, left)
 
 	if top == min then
 		return "up"
 	end
 
-	if bottom == min then
-		return "bottom"
+	if down == min then
+		return "down"
 	end
 
 	if left == min then

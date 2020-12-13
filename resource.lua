@@ -20,7 +20,6 @@ function Resource.load()
 
 	local rc = Resource.Canvases
 	rc.interact_btn = lg.newText(rf.dialog, "Interact")
-
 end
 
 return Resource
