@@ -54,7 +54,7 @@ function Entity:remove_component(...)
 	end
 end
 
--- This method is overriden by the deriving 
+-- This method is overriden by the deriving
 -- class that implements an entity.
 function Entity:_physics_process(dt)
 	-- body
@@ -98,7 +98,11 @@ function Entity:get_scale()
 end
 
 function Entity:set_scale(sx, sy)
-	self:get_component(Transform).scale = Vec2(sx, sy)
+	self.transform.scale = Vec2(sx, sy)
+end
+
+function Entity:set_xscale(x)
+	self.transform.scale.x = x
 end
 
 function Entity:rotation()

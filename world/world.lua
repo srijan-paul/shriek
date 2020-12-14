@@ -148,6 +148,7 @@ end
 function World:add_drawable(d)
 	-- TODO: after depth sorting, change this logic
 	--  to insert in sorted array
+	d.__depth = #self.drawables
 	tinsert(self.drawables, d)
 end
 

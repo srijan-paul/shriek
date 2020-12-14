@@ -27,8 +27,12 @@ Vector2.__add = function(v1, v2)
 end
 
 Vector2.__mul = function(v1, v2)
-	if type(v1) == 'number' then return Vector2:new(v1 * v2.x, v1 * v2.y) end
-	if type(v2) == 'number' then return Vector2:new(v2 * v1.x, v2 * v1.y) end
+	if type(v1) == "number" then
+		return Vector2:new(v1 * v2.x, v1 * v2.y)
+	end
+	if type(v2) == "number" then
+		return Vector2:new(v2 * v1.x, v2 * v1.y)
+	end
 	return Vector2:new(v1.x * v2.x, v1.y * v2.y)
 end
 
@@ -45,7 +49,7 @@ Vector2.__eq = function(v1, v2)
 end
 
 Vector2.__tostring = function(v)
-	return '{x = ' .. v.x .. ', y = ' .. v.y .. '}'
+	return "{x = " .. v.x .. ", y = " .. v.y .. "}"
 end
 
 Vector2.__lt = function(v1, v2)
@@ -67,8 +71,8 @@ end
 function Vector2:new(_x, _y)
 	local newVec = {}
 
-	assert(type(_x) == 'number' and type(_y) == 'number',
-       	'Expected number as vector dimension')
+	assert(type(_x) == "number" and type(_y) == "number",
+			"Expected number as vector dimension")
 
 	newVec.x, newVec.y = _x, _y
 	self.__index = self
@@ -94,7 +98,9 @@ end
 
 function Vector2:normalized()
 	local root = math.sqrt(self.x * self.x + self.y * self.y)
-	if root == 0 then return Vector2:new(0, 0) end
+	if root == 0 then
+		return Vector2:new(0, 0)
+	end
 	return Vector2:new(self.x / root, self.y / root)
 end
 
@@ -134,6 +140,9 @@ end
 
 function Vector2:with_mag(n)
 	local root = math.sqrt(self.x * self.x + self.y * self.y)
+	if root == 0 then
+		return Vector2(0, 0)
+	end
 	local x = n * (self.x / root)
 	local y = n * (self.y / root)
 	return Vector2:new(x, y)
@@ -148,7 +157,9 @@ function Vector2.random_unit()
 end
 
 function Vector2:angle(vec)
-	if vec then return math.atan2(self.y, self.x) - math.atan2(vec.y, vec.x) end
+	if vec then
+		return math.atan2(self.y, self.x) - math.atan2(vec.y, vec.x)
+	end
 	return math.atan2(self.y, self.x)
 end
 

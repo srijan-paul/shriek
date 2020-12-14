@@ -11,27 +11,51 @@ local State = {MOVE = 1, IDLE = 2}
 function Player:init(world, x, y)
 	Entt.init(self, world, x, y)
 	self:add_component(cmp.Collider, AABB_WIDTH, AABB_HEIGHT, "player", AABB_OFFSET)
-	self:add_component(cmp.AnimSprite, Resource.Sprite.Player,
-			{{"walk_down", 5, 8, 0.2, true}}):play("walk_down")
+	self.anim = self:add_component(cmp.AnimSprite, Resource.Sprite.Player, {
+		{"walk_down", 5, 8, 0.2, true}, {"walk_left", 1, 4, 0.15, true}, --
+		{"idle_down", 6, 6, 0, false}, {"idle_right", 4, 4, 0, false}, --
+		{"idle_left", 4, 4, 0, false}
+	})
+	self.anim:play("idle_down")
 	self.state = State.IDLE
 	self.footstep_audio = self:add_component(cmp.AudioPlayer,
 			Resource.Sfx.Steps.Wood, true)
-	self.footstep_audio:set_duration(0.4)
+
+	self.face_dir = Direction.DOWN
+	self.footstep_audio:set_duration(0.5)
 	self.footstep_audio:set_volume(0.5)
 end
 
 function Player:handle_input(x_dir, y_dir)
-	local vel = Vec2(x_dir, y_dir) * MOVE_SPEED
+	local vel = Vec2(x_dir, y_dir):with_mag(MOVE_SPEED)
 
 	if vel.x ~= 0 or vel.y ~= 0 then
 		self.state = State.MOVE
 		self.footstep_audio:play()
 	else
 		self.state = State.IDLE
+		self.anim:play("idle_" .. Direction.string(self.face_dir))
 		self.footstep_audio:pause()
+		return
 	end
 
 	self:move(vel)
+
+	if x_dir == -1 then
+		self.anim:play("walk_left")
+		self:set_xscale(-1)
+		self.face_dir = Direction.LEFT
+	elseif x_dir == 1 then
+		self.anim:play("walk_left")
+		self:set_xscale(1)
+		self.face_dir = Direction.RIGHT
+	end
+
+	if y_dir == 1 then
+		self.anim:play("walk_down")
+		self.face_dir = Direction.DOWN
+	end
+
 end
 
 function Player:_physics_process(dt)
