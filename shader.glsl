@@ -1,10 +1,14 @@
-return love.graphics.newShader([[
+// NOTE: this isn't actually a GLSL shader
+// It's actually written in LSL (The LOVE shading language)
+// I just put this in a different file to get some
+// syntax highlighting.
 extern float los_radius;
 extern vec2 los_center;
 
-vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) {
+vec4 effect(vec4 color, Image texture, vec2 texture_coords,
+            vec2 screen_coords) {
   float dist = distance(los_center, screen_coords);
-  
+
   // as dist goes from 0 to los_radius, alpha goes from 1.0 to 0.0
 
   float diff = los_radius - dist;
@@ -19,5 +23,3 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
 
   return pixel * color;
 }
-]])
-

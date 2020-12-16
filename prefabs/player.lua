@@ -2,7 +2,7 @@ local Entt = require "prefabs.entity"
 local cmp = require "component"
 
 local AABB_WIDTH, AABB_HEIGHT = 7, 10
-local AABB_OFFSET = Vec2(1, 4)
+local AABB_OFFSET = Vec2(-2, -1)
 local MOVE_SPEED = 0.6
 local Player = class("Player", Entt)
 
@@ -10,11 +10,12 @@ local State = {MOVE = 1, IDLE = 2}
 
 function Player:init(world, x, y)
 	Entt.init(self, world, x, y)
+	self:set_scale(0.8, 0.8)
 	self:add_component(cmp.Collider, AABB_WIDTH, AABB_HEIGHT, "player", AABB_OFFSET)
 	self.anim = self:add_component(cmp.AnimSprite, Resource.Sprite.Player, {
-		{"walk_down", 5, 8, 0.2, true}, {"walk_left", 1, 4, 0.15, true}, --
-		{"idle_down", 6, 6, 0, false}, {"idle_right", 4, 4, 0, false}, --
-		{"idle_left", 4, 4, 0, false}
+		{"walk_down", 1, 4, 0.15, true}, {"walk_left", 1, 4, 0.15, true}, --
+		{"idle_down", 2, 2, 0, false}, {"idle_right", 2, 2, 0, false}, --
+		{"idle_left", 2, 2, 0, false}
 	})
 	self.anim:play("idle_down")
 	self.state = State.IDLE
@@ -43,11 +44,11 @@ function Player:handle_input(x_dir, y_dir)
 
 	if x_dir == -1 then
 		self.anim:play("walk_left")
-		self:set_xscale(-1)
+		self:set_xscale(-0.8)
 		self.face_dir = Direction.LEFT
 	elseif x_dir == 1 then
 		self.anim:play("walk_left")
-		self:set_xscale(1)
+		self:set_xscale(0.8)
 		self.face_dir = Direction.RIGHT
 	end
 

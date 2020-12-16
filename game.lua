@@ -35,9 +35,8 @@ end
 
 function game.shade(shader)
 	local player_pos = room:player_screen_coords()
-	local vec2 = {player_pos.x, player_pos.y}
-	shader:send("LoS_center", vec2)
-	shader:send("LoS_radius", vision_radius)
+	shader:send("los_center", {player_pos.x, player_pos.y})
+	shader:send("los_radius", vision_radius)
 end
 
 return game
