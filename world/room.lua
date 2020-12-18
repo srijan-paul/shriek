@@ -11,7 +11,7 @@ end
 
 function Room:draw()
 	camera:set()
-	lg.draw(Resource.Sprite.RoomBg, 0, 0)
+	lg.draw(self.bgImg, 0, 0)
 	self.world:draw()
 	camera:unset()
 end

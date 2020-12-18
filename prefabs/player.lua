@@ -17,6 +17,7 @@ function Player:init(world, x, y)
 		{"idle_down", 2, 2, 0, false}, {"idle_right", 2, 2, 0, false}, --
 		{"idle_left", 2, 2, 0, false}
 	})
+	self.id = "player"
 	self.anim:play("idle_down")
 	self.state = State.IDLE
 	self.footstep_audio = self:add_component(cmp.AudioPlayer,

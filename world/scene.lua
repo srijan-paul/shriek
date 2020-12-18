@@ -3,8 +3,6 @@ local camera = require "camera"
 local Player = require "prefabs.player"
 local House = require "world.house"
 
-House.load()
-
 -- temporary imports
 local Wall = require "prefabs.wall"
 local Interactable = require "prefabs.interactable"
@@ -17,8 +15,7 @@ function Scene:init()
 	--   temporary code
 	self.player = Player(self.current_room.world, 100, 100)
 	Wall(self.current_room.world, 0, 0, 128, 23)
-	local photo = Interactable(self.current_room.world, 95, 10,
-			{target = self.player, size = 30})
+	local photo = Interactable(self.current_room.world, 95, 10, {range = 20})
 	photo:on_trigger(function()
 		Say {"You", "How did this painting get covered in blood?"}
 	end)

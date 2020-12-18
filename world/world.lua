@@ -144,7 +144,10 @@ function World:_physics_process(dt)
 		if self.entities[i]:has_component(cmp.Collider) then
 			self.grid:insert(self.entities[i]:get_component(cmp.Collider))
 		end
-		e:_physics_process(dt)
+	end
+
+	for i = #self.entities, 1, -1 do
+		self.entities[i]:_physics_process(dt)
 	end
 
 	self.grid:process_collisions()
@@ -179,8 +182,17 @@ function World:remove_gameobject(g)
 	g._delete_flag = true
 end
 
-function World:query(shape, x, y, w, h)
-	return self.grid:query(shape, x, y, w, h)
+function World:query(shape, tl, w, h)
+	return self.grid:query(shape, tl, w, h)
+end
+
+---Returns a table containing all entities having a 
+---collider component in `radius` range of `center` coordinate.
+---@param center table Vector representing the center of the query circle
+---@param radius number search radius
+---@return table
+function World:cquery(center, radius)
+	return self.grid:query("circle", center, radius)
 end
 
 function World:add_particle_system(sys)

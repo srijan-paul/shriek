@@ -112,7 +112,9 @@ function Grid:process_collisions()
 end
 
 local grid_query = {
-	["circle"] = function(grid, x, y, radius)
+	["circle"] = function(grid, center, radius)
+		local x = center.x
+		local y = center.y
 		local start_row, start_col = grid:toRowCol((x - radius), (y - radius))
 		local end_row, end_col = grid:toRowCol((x + radius), y + radius)
 
@@ -121,7 +123,10 @@ local grid_query = {
 		for i = start_row, end_row do
 			for j = start_col, end_col do
 				for k = 1, #grid.cells[i][j] do
-					table.insert(game_objects, grid.cells[i][j][k].owner)
+					local pos = grid.cells[i][j][k]:get_pos()
+					if (pos - center):mag() < radius then
+						table.insert(game_objects, grid.cells[i][j][k].owner)
+					end
 				end
 			end
 		end
@@ -130,8 +135,8 @@ local grid_query = {
 	end
 }
 
-function Grid:query(shape, x, y, w, h)
-	return grid_query[shape](self, x, y, w, h)
+function Grid:query(shape, point, w, h)
+	return grid_query[shape](self, point, w, h)
 end
 
 return Grid

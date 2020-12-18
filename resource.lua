@@ -7,7 +7,7 @@ local la = love.audio
 function Resource.load()
 	local rs = Resource.Sprite
 	rs.Box = lg.newImage("assets/images/temp.png")
-	rs.RoomBg = lg.newImage("assets/images/base_room.png")
+	rs.LivingRoom = lg.newImage("assets/images/base_room.png")
 	rs.Player = janim.newSpriteSheet("assets/images/player.png", 4, 1)
 
 	local sfx = Resource.Sfx

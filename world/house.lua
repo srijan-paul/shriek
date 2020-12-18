@@ -7,7 +7,7 @@ function House.load()
 	House.LivingRoom = Room({
 		width = 128,
 		height = 128,
-		image = Resource.Sprite.RoomBg
+		image = Resource.Sprite.LivingRoom
 	}, function(world)
 		-- table
 		Prop(world, 21, 47, {collision = {width = 29, height = 16}})

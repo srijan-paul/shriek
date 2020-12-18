@@ -7,8 +7,7 @@ local Interactable = class("Interactable", Entt)
 
 function Interactable:init(world, x, y, config)
 	Entt.init(self, world, x, y)
-	self.target = config.target -- the player really.
-	self.radius = config.size
+	self.radius = config.range
 
 	self.btn = self:add_component(UISprite, Resource.Canvases.interact_btn)
 	self.btn.is_visible = false
@@ -28,9 +27,18 @@ function Interactable:init(world, x, y, config)
 	end
 end
 
+function Interactable:is_player_in_range()
+	local ents = self.world:cquery(self:get_pos(), self.radius)
+	for _, ent in ipairs(ents) do
+		if ent.id == "player" then
+			return true
+		end
+	end
+	return false
+end
+
 function Interactable:_physics_process(_)
-	local dist = (self.target:get_pos() - self:get_pos()):mag()
-	if dist < self.radius then
+	if self:is_player_in_range() then
 		if self.is_player_close then
 			if lk.isDown("e") and not self.is_callback_running and self.callback then
 				DialogManager:start(self.callback, self)

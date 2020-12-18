@@ -13,6 +13,8 @@ end
 
 local current_scene
 function game.load()
+	local house = require "world.house"
+	house.load()
 	current_scene = Scene()
 end
 
