@@ -1,4 +1,4 @@
-local Room = require "world.room"
+local Scene = require "world.scene"
 local Dialog = require "dialog"
 local game = {}
 
@@ -11,22 +11,22 @@ _G.Say = function(dialog)
 	Moan.speak({dialog[1], {1, 0.8, 0.5}}, {dialog[2]})
 end
 
-local room
+local current_scene
 function game.load()
-	room = Room()
+	current_scene = Scene()
 end
 
 function game.draw()
-	room:draw()
+	current_scene:draw()
 end
 
 function game.ui_layer()
-	room:ui_layer()
+	current_scene:ui_layer()
 end
 
 function game.update(dt)
 	Dialog:update()
-	room:update(dt)
+	current_scene:update(dt)
 	vision_radius = vision_radius + vision_dr
 	if vision_radius > VISION_MAX or vision_radius < VISION_MIN then
 		vision_dr = vision_dr * -1
@@ -34,7 +34,7 @@ function game.update(dt)
 end
 
 function game.shade(shader)
-	local player_pos = room:player_screen_coords()
+	local player_pos = current_scene:player_screen_coords()
 	shader:send("los_center", {player_pos.x, player_pos.y})
 	shader:send("los_radius", vision_radius)
 end

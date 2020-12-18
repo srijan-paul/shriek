@@ -74,4 +74,12 @@ function AnimatedSprite:delete()
 	self.owner.world:remove_drawable(self)
 end
 
+function AnimatedSprite:remove_from_world(world)
+	world:remove_drawable(self)
+end
+
+function AnimatedSprite:add_to_world(world)
+	world:add_drawable(self)
+end
+
 return AnimatedSprite

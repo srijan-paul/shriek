@@ -6,8 +6,8 @@ function Sprite:init(owner, drawable)
 	self.image = drawable
 	self.width = drawable:getWidth()
 	self.height = drawable:getHeight()
-	self.owner.world:add_drawable(self)
 	self.is_visible = true
+	owner.world:add_drawable(self)
 end
 
 function Sprite:draw()
@@ -29,7 +29,15 @@ function Sprite:draw()
 end
 
 function Sprite:delete()
-	self.world:remove_drawable(self)
+	self.owner.world:remove_drawable(self)
+end
+
+function Sprite:remove_from_world(world)
+	world:remove_drawable(self)
+end
+
+function Sprite:add_to_world(world)
+	world:add_drawable(self)
 end
 
 return Sprite

@@ -2,12 +2,12 @@ local UISprite = class "UISprite"
 local camera = require "camera"
 
 function UISprite:init(owner, drawable)
-	owner.world:add_ui_element(self)
 	self.owner = owner
 	self.img = drawable
 	self.width = drawable:getWidth()
 	self.height = drawable:getHeight()
 	self.is_visible = true
+	owner.world:add_ui_element(self)
 end
 
 function UISprite:draw()
@@ -24,6 +24,14 @@ end
 
 function UISprite:delete()
 	self.owner.world:remove_ui_element(self)
+end
+
+function UISprite:remove_from_world(world)
+	world:remove_ui_element(self)
+end
+
+function UISprite:add_to_world(world)
+	world:add_ui_element(self)
 end
 
 return UISprite

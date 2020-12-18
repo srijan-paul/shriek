@@ -68,6 +68,11 @@ function World:clear_garbage()
 		local e = self.entities[i]
 		if e._delete_flag then
 			tremove(self.entities, i)
+			for _, comp in ipairs(e._components) do
+				if comp.remove_from_world then
+					comp:remove_from_world(self)
+				end
+			end
 			e._delete_flag = false
 		end
 	end
