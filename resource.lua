@@ -29,6 +29,10 @@ function Resource.load()
 	sfx.Ambient1:setLooping(true)
 	sfx.Ambient1:play()
 
+	-- credits: https://opengameart.org/content/light-switch-on-sfx-sound-effect
+	sfx.SwitchOn = la.newSource("assets/sound/Light-Switch-Click-On-Sfx.ogg",
+			"static")
+
 	local rf = Resource.Font
 	rf.dialog = lg.newFont("assets/font/VCR_OSD_MONO_1.001.ttf", 22)
 

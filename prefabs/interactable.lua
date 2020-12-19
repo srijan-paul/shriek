@@ -3,6 +3,8 @@ local UISprite = require "component.UISprite"
 local Collider = require "component.collider"
 local DialogManager = require "dialog"
 
+local torch = require "torch"
+
 local Interactable = class("Interactable", Entt)
 
 ---TODO
@@ -33,6 +35,9 @@ function Interactable:init(world, x, y, config)
 	-- when the player is close and presses the Interact button.
 	self.is_callback_running = false
 
+	-- whether this object can only be interacted with when the 
+	-- flashlight is on. Is `true` by default
+	self.vision_triggered = config.vision_triggered or true
 	-- optional collider component.
 	if config.collider then
 		local offset = config.collider.offset or Vec2.ZERO()
@@ -52,7 +57,7 @@ function Interactable:is_player_in_range()
 end
 
 function Interactable:_physics_process(_)
-	if self:is_player_in_range() then
+	if self:is_player_in_range() and (torch.on or not self.vision_triggered) then
 		if self.is_player_close then
 			if lk.isDown("e") and not self.is_callback_running and self.callback then
 				DialogManager:start(self.callback, self)
