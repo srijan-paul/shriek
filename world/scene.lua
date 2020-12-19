@@ -3,16 +3,13 @@ local camera = require "camera"
 local Player = require "prefabs.player"
 local House = require "world.house"
 
--- temporary imports
-local Wall = require "prefabs.wall"
-local Interactable = require "prefabs.interactable"
-
 local ZOOM = 4.0
 function Scene:init()
 	self.current_room = House.LivingRoom
 	camera:zoom(ZOOM)
-	camera:setPos(-30, -10)
-	--   temporary code
+	local xoff = (self.current_room.width - DISPLAY_WIDTH / ZOOM) / 2
+	local yoff = (self.current_room.height - DISPLAY_HEIGHT / ZOOM) / 2
+	camera:setPos(xoff, yoff)
 	self.player = Player(self.current_room.world, 100, 100)
 end
 

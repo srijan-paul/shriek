@@ -4,6 +4,8 @@ local camera = require "camera"
 local Room = class "Room"
 
 function Room:init(conf, initfn)
+	self.width = conf.width
+	self.height = conf.height
 	self.world = World(conf.width, conf.height)
 	self.bgImg = conf.image
 	initfn(self.world)
