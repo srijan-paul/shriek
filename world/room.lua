@@ -8,7 +8,9 @@ function Room:init(conf, initfn)
 	self.height = conf.height
 	self.world = World(conf.width, conf.height)
 	self.bgImg = conf.image
-	initfn(self.world)
+	if initfn then
+		initfn(self.world)
+	end
 end
 
 function Room:draw()

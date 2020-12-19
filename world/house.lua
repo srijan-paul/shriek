@@ -26,6 +26,25 @@ function House.load()
 			Say {"You", "How did this painting get covered in blood?"}
 		end)
 	end)
+
+	local BedRoomImg = Resource.Sprite.BedRoom
+	House.BedRoom = Room({
+		width = BedRoomImg:getWidth(),
+		height = BedRoomImg:getHeight(),
+		image = BedRoomImg
+	}, function(world)
+		Wall(world, 0, 0, 85, 21)
+
+		-- Bed
+		Prop(world, 67, 36, {collision = {width = 20, height = 29}})
+		-- Table
+		Prop(world, 14, 31, {collision = {width = 12, height = 16}})
+		-- Chair
+		Prop(world, 24, 32, {collision = {width = 7, height = 8}})
+		-- Square table thing
+		Prop(world, 70, 70, {collision = {width = 12, height = 14}})
+
+	end)
 end
 
 return House

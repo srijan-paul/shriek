@@ -5,7 +5,7 @@ local House = require "world.house"
 
 local ZOOM = 4.0
 function Scene:init()
-	self.current_room = House.LivingRoom
+	self.current_room = House.BedRoom
 	camera:zoom(ZOOM)
 	local xoff = (self.current_room.width - DISPLAY_WIDTH / ZOOM) / 2
 	local yoff = (self.current_room.height - DISPLAY_HEIGHT / ZOOM) / 2
