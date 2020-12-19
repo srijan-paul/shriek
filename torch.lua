@@ -1,12 +1,17 @@
-local vision_opts = {
-	min = 150.0,
-	max = 170.0,
-	radius = 150.0,
-	dr = 0.25,
-	on = true
+local off_radius = 70
+local on_radius_min = 120
+local on_radius_max = 140
+local dr = 0.25
+
+local torch = {
+	min = on_radius_min,
+	max = on_radius_max,
+	radius = off_radius,
+	dr = dr,
+	on = false
 }
 
-function vision_opts:toggle()
+function torch:toggle()
 	if Resource.Sfx.SwitchOn:isPlaying() then
 		Resource.Sfx.SwitchOn:stop()
 	end
@@ -15,13 +20,13 @@ function vision_opts:toggle()
 	if self.on == true then
 		self.on = false
 		self.dr = 0
-		self.radius = 45
+		self.radius = off_radius
 		return
 	end
 
 	self.on = true
-	self.dr = 0.25
+	self.dr = dr
 	self.radius = self.min
 end
 
-return vision_opts
+return torch

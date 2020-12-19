@@ -3,6 +3,8 @@ local Prop = require "prefabs.prop"
 local Wall = require "prefabs.wall"
 local Interactable = require "prefabs.interactable"
 
+local GState = require "gamestate"
+
 local House = {}
 
 function House.load()
@@ -44,7 +46,7 @@ function House.load()
 		-- Square table thing
 		Prop(world, 70, 70, {collision = {width = 12, height = 14}})
 
-		local mess = Interactable(world, 16, 66, {range = 20})
+		local mess = Interactable(world, 19, 66, {range = 15})
 		mess:on_trigger(function()
 			Say {"You", "Mom will be mad if she sees this mess."}
 		end)
@@ -52,6 +54,16 @@ function House.load()
 		local clock = Interactable(world, 29, 12, {range = 20})
 		clock:on_trigger(function()
 			Say {"You", "It's past midnight..."}
+		end)
+
+		local light_switch = Interactable(world, 55, 19,
+				{range = 10, vision_triggered = false})
+		light_switch:on_trigger(function()
+			Say {"You", "The lights are out. A powercut?"}
+
+			if not GState.torch_found then
+				Say {"You", "I better grab my torch from the drawer."}
+			end
 		end)
 	end)
 end

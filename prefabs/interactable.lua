@@ -37,7 +37,8 @@ function Interactable:init(world, x, y, config)
 
 	-- whether this object can only be interacted with when the 
 	-- flashlight is on. Is `true` by default
-	self.vision_triggered = config.vision_triggered or true
+	self.vision_triggered = type(config.vision_triggered) == "nil" and true or
+                        			config.vision_triggered
 	-- optional collider component.
 	if config.collider then
 		local offset = config.collider.offset or Vec2.ZERO()

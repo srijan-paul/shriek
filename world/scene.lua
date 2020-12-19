@@ -10,7 +10,11 @@ function Scene:init()
 	local xoff = (self.current_room.width - DISPLAY_WIDTH / ZOOM) / 2
 	local yoff = (self.current_room.height - DISPLAY_HEIGHT / ZOOM) / 2
 	camera:setPos(xoff, yoff)
-	self.player = Player(self.current_room.world, 100, 100)
+	self.player = Player(self.current_room.world, 85 / 2, 93 / 2)
+
+	Say {"You", "What was that noise just now?"}
+	Say {"You", "I'm scared... I can't sleep with the lights off anymore."}
+
 end
 
 function Scene:draw()

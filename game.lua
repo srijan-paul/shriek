@@ -1,5 +1,6 @@
 local Scene = require "world.scene"
 local Dialog = require "dialog"
+local State = require "gamestate"
 local game = {}
 
 local vision_opts = require "torch"
