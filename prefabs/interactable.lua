@@ -5,6 +5,16 @@ local DialogManager = require "dialog"
 
 local Interactable = class("Interactable", Entt)
 
+---TODO
+---@param text string
+local function make_ui_text(text)
+	local c = lg.newCanvas(10, 10)
+	c:renderTo(function()
+		lg.print(text, 0, 0)
+	end)
+	return c
+end
+
 function Interactable:init(world, x, y, config)
 	Entt.init(self, world, x, y)
 	self.radius = config.range
@@ -14,6 +24,10 @@ function Interactable:init(world, x, y, config)
 	-- function called when the player presses the interact button
 	-- while standing in range of this object.
 	self.callback = nil
+
+	-- function called when the interaction sequence
+	-- is finished.
+	self.on_end = nil
 	self.is_player_close = false
 	-- if this is true then the callback isn't even
 	-- when the player is close and presses the Interact button.
@@ -56,11 +70,20 @@ end
 ---@param fn function callback function.
 function Interactable:on_trigger(fn)
 	self.callback = fn
+	return self
+end
+
+function Interactable:on_end(fn)
+	self.on_end = fn
+	return self
 end
 
 function Interactable:end_sequence()
 	self.is_callback_running = false
 	self.btn.is_visible = true
+	if self.on_end then
+		self:on_end()
+	end
 	Moan.clearMessages()
 end
 

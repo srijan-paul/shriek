@@ -44,6 +44,15 @@ function House.load()
 		-- Square table thing
 		Prop(world, 70, 70, {collision = {width = 12, height = 14}})
 
+		local mess = Interactable(world, 16, 66, {range = 20})
+		mess:on_trigger(function()
+			Say {"You", "Mom will be mad if she sees this mess."}
+		end)
+
+		local clock = Interactable(world, 29, 12, {range = 20})
+		clock:on_trigger(function()
+			Say {"You", "It's past midnight..."}
+		end)
 	end)
 end
 
