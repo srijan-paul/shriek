@@ -3,7 +3,6 @@ local Prop = require "prefabs.prop"
 local Wall = require "prefabs.wall"
 local Interactable = require "prefabs.interactable"
 local Dialog = require "dialog"
-local FloatingText = require "prefabs.floating_text"
 
 local GState = require "gamestate"
 
@@ -48,7 +47,8 @@ function House.load()
 			vision_triggered = false,
 			range = 10,
 			active = false,
-			sprite = Resource.Sprite.TorchItem
+			sprite = Resource.Sprite.TorchItem,
+			text = {ITEM_COLOR, "Flashlight"}
 		})
 
 		torch:on_trigger(function()
@@ -77,8 +77,11 @@ function House.load()
 			Say {"You", "It's past midnight..."}
 		end)
 
-		local light_switch = Interactable(world, 55, 19,
-				{range = 10, vision_triggered = false})
+		local light_switch = Interactable(world, 55, 19, {
+			range = 10,
+			vision_triggered = false,
+			text = "use"
+		})
 		light_switch:on_trigger(function()
 			Say {"You", "The lights are out. A powercut?"}
 

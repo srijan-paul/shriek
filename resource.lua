@@ -37,12 +37,16 @@ function Resource.load()
 	-- Vinrax on OpenGameArt
 	sfx.ItemPickup = la.newSource("assets/sound/pickup.ogg", "static")
 
+	-- credits for Rain and thunder sound effect: https://opengameart.org/content/rain-and-thunders
+	sfx.Rain = la.newSource("assets/sound/Dark_Rainy_Nightambience.ogg", "stream")
+	sfx.Rain:setVolume(0.02)
+
 	local rf = Resource.Font
 	rf.dialog = lg.newFont("assets/font/VCR_OSD_MONO_1.001.ttf", 22)
 	rf.Ui = lg.newFont("assets/font/rainyhearts.ttf", 25)
 
 	local rc = Resource.Canvases
-	rc.interact_btn = lg.newText(rf.dialog, "Interact")
+	rc.interact_btn = lg.newText(rf.Ui, "Interact")
 end
 
 return Resource

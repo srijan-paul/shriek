@@ -11,18 +11,16 @@ local Interactable = class("Interactable", Entt)
 ---TODO
 ---@param text string
 local function make_ui_text(text)
-	local c = lg.newCanvas(10, 10)
-	c:renderTo(function()
-		lg.print(text, 0, 0)
-	end)
-	return c
+	return lg.newText(Resource.Font.Ui, text)
 end
 
 function Interactable:init(world, x, y, config)
 	Entt.init(self, world, x, y)
 	self.radius = config.range
 
-	self.btn = self:add_component(UISprite, Resource.Canvases.interact_btn)
+	local text = config.text and make_ui_text(config.text) or
+             			Resource.Canvases.interact_btn
+	self.btn = self:add_component(UISprite, text)
 	self.btn.is_visible = false
 	-- function called when the player presses the interact button
 	-- while standing in range of this object.

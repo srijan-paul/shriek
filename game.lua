@@ -9,6 +9,8 @@ _G.Say = function(dialog, props)
 	Moan.speak({dialog[1], {1, 0.8, 0.5}}, {dialog[2]}, props)
 end
 
+_G.ITEM_COLOR = {0.2, 0.8, 0.1}
+
 local current_scene
 function game.load()
 	local house = require "world.house"
