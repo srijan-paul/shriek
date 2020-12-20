@@ -10,6 +10,7 @@ function Resource.load()
 	rs.LivingRoom = lg.newImage("assets/images/base_room.png")
 	rs.BedRoom = lg.newImage("assets/images/bedroom.png")
 	rs.Player = janim.newSpriteSheet("assets/images/player.png", 4, 1)
+	rs.TorchItem = lg.newImage("assets/images/torch.png")
 
 	local sfx = Resource.Sfx
 	sfx.Steps = {}

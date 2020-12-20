@@ -2,6 +2,8 @@ local Room = require "world.room"
 local Prop = require "prefabs.prop"
 local Wall = require "prefabs.wall"
 local Interactable = require "prefabs.interactable"
+local Dialog = require "dialog"
+local FloatingText = require "prefabs.floating_text"
 
 local GState = require "gamestate"
 
@@ -41,6 +43,25 @@ function House.load()
 		Prop(world, 67, 36, {collision = {width = 20, height = 29}})
 		-- Table
 		Prop(world, 14, 31, {collision = {width = 12, height = 16}})
+
+		local torch = Interactable(world, 13, 35, {
+			vision_triggered = false,
+			range = 10,
+			active = false,
+			sprite = Resource.Sprite.TorchItem
+		})
+
+		torch:on_trigger(function()
+			Resource.Sfx.ItemPickup:play()
+			Timer.after(1, function()
+				Dialog:start_seq()
+				GState.events.torch_found = true
+				Say({"You", "That's better."})
+			end)
+			House.BedRoom.scene:add_hint("Press 'Q' to switch flashlight on and off.")
+			torch:delete()
+		end)
+
 		-- Chair
 		Prop(world, 24, 32, {collision = {width = 7, height = 8}})
 		-- Square table thing
@@ -61,12 +82,16 @@ function House.load()
 		light_switch:on_trigger(function()
 			Say {"You", "The lights are out. A powercut?"}
 
-			if not GState.torch_found then
-				Say {"You", "I better grab my torch from the drawer."}
+			if not GState.events.torch_found then
+				Say({"You", "I better grab my torch from the drawer."}, {
+					oncomplete = function()
+						GState.objective = "Find a flashlight."
+						torch.active = true
+					end
+				})
 			end
 		end)
 	end)
 end
 
 return House
-

@@ -101,6 +101,7 @@ end
 
 function love.update(dt)
 	Moan.update(dt)
+	Timer.update(dt)
 	game.update(dt)
 end
 

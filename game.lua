@@ -42,7 +42,7 @@ function game.shade(shader)
 end
 
 function love.keypressed(key)
-	if key == "q" then
+	if key == "q" and State.events.torch_found then
 		vision_opts:toggle()
 	end
 end
