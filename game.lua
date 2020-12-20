@@ -10,6 +10,8 @@ _G.Say = function(dialog, props)
 end
 
 _G.ITEM_COLOR = {0.2, 0.8, 0.1}
+_G.YELLOW_COLOR = {1, 0.8, 0.5}
+_G.GREEN = {sugar.rgb("#00b894")}
 
 local current_scene
 function game.load()

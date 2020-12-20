@@ -86,6 +86,7 @@ end
 
 function Scene:add_hint(msg)
 	self:add_message({HINT_COLOR, "HINT: ", {1, 1, 1}, msg}, 5, true)
+	Resource.Sfx.Hint:play()
 end
 
 function Scene.MoveEntity(ent, w1, w2)

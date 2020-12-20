@@ -48,7 +48,7 @@ function House.load()
 			range = 10,
 			active = false,
 			sprite = Resource.Sprite.TorchItem,
-			text = {ITEM_COLOR, "Flashlight"}
+			text = {GREEN, "Flashlight"}
 		})
 
 		torch:on_trigger(function()
@@ -56,9 +56,12 @@ function House.load()
 			Timer.after(1, function()
 				Dialog:start_seq()
 				GState.events.torch_found = true
-				Say({"You", "That's better."})
+				Say({"You", "That's better."}, {
+					oncomplete = function()
+						House.BedRoom.scene:add_hint("Press 'Q' to switch flashlight on and off.")
+					end
+				})
 			end)
-			House.BedRoom.scene:add_hint("Press 'Q' to switch flashlight on and off.")
 			torch:delete()
 		end)
 
@@ -80,7 +83,7 @@ function House.load()
 		local light_switch = Interactable(world, 55, 19, {
 			range = 10,
 			vision_triggered = false,
-			text = "use"
+			text = {YELLOW_COLOR, "use"}
 		})
 		light_switch:on_trigger(function()
 			Say {"You", "The lights are out. A powercut?"}

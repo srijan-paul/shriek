@@ -41,6 +41,9 @@ function Resource.load()
 	sfx.Rain = la.newSource("assets/sound/Dark_Rainy_Nightambience.ogg", "stream")
 	sfx.Rain:setVolume(0.02)
 
+	-- credits: https://opengameart.org/content/menu-selection-click
+	sfx.Hint = la.newSource("assets/sound/hint.ogg", "static")
+
 	local rf = Resource.Font
 	rf.dialog = lg.newFont("assets/font/VCR_OSD_MONO_1.001.ttf", 22)
 	rf.Ui = lg.newFont("assets/font/rainyhearts.ttf", 25)
