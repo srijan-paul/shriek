@@ -24,8 +24,7 @@ function Player:init(world, x, y)
 			Resource.Sfx.Steps.Wood, true)
 
 	self.face_dir = Direction.DOWN
-	self.footstep_audio:set_duration(0.5)
-	self.footstep_audio:set_volume(0.5)
+	self.footstep_audio:set_duration(0.4)
 end
 
 function Player:handle_input(x_dir, y_dir)

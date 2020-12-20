@@ -48,7 +48,7 @@ function House.load()
 			range = 10,
 			active = false,
 			sprite = Resource.Sprite.TorchItem,
-			text = {GREEN, "Flashlight"}
+			text = {YELLOW, "Flashlight"}
 		})
 
 		torch:on_trigger(function()
@@ -83,7 +83,7 @@ function House.load()
 		local light_switch = Interactable(world, 55, 19, {
 			range = 10,
 			vision_triggered = false,
-			text = {YELLOW_COLOR, "use"}
+			text = {YELLOW, "use"}
 		})
 		light_switch:on_trigger(function()
 			Say {"You", "The lights are out. A powercut?"}
