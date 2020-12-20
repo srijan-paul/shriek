@@ -85,8 +85,14 @@ function Interactable:on_trigger(fn)
 	return self
 end
 
-function Interactable:on_end(fn)
-	self.on_end = fn
+function Interactable:on_end(fn, delay)
+	if delay then
+		self.on_end = function()
+			Timer.after(delay, fn)
+		end
+	else
+		self.on_end = fn
+	end
 	return self
 end
 

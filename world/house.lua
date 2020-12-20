@@ -53,12 +53,13 @@ function House.load()
 
 		torch:on_trigger(function()
 			Resource.Sfx.ItemPickup:play()
-			Timer.after(1, function()
+			Timer.after(0.25, function()
 				Dialog:start_seq()
 				GState.events.torch_found = true
 				Say({"You", "That's better."}, {
 					oncomplete = function()
-						House.BedRoom.scene:add_hint("Press 'Q' to switch flashlight on and off.")
+						House.BedRoom.scene:add_hint("Press [Q] to switch flashlight on and off.")
+						GState.clear_objective()
 					end
 				})
 			end)
@@ -74,6 +75,22 @@ function House.load()
 		mess:on_trigger(function()
 			Say {"You", "Mom will be mad if she sees this mess."}
 		end)
+		mess:on_end(function()
+			Resource.Sfx.PhoneRing:setLooping(true)
+			Moan.clearMessages()
+			GState.can_player_move = false
+			Resource.Sfx.PhoneRing:play()
+			Say {" ", "(Phone rings)"}
+			Timer.after(2, function()
+				Dialog:start_seq()
+				Say {"You", "Who could be calling at this hour?"}
+				Say ({"You", "I hope it's mom and dad. I want them to come back."}, {
+					oncomplete = function()
+						GState.set_objective("Recieve the call.")
+					end
+				})
+			end)
+		end, 5)
 
 		local clock = Interactable(world, 29, 12, {range = 20})
 		clock:on_trigger(function()
@@ -91,7 +108,7 @@ function House.load()
 			if not GState.events.torch_found then
 				Say({"You", "I better grab my torch from the drawer."}, {
 					oncomplete = function()
-						GState.objective = "Find a flashlight."
+						GState.set_objective("Find a flashlight.")
 						torch.active = true
 					end
 				})

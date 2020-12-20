@@ -24,7 +24,8 @@ function Scene:init()
 	Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
 		oncomplete = function()
 			GameState.can_player_move = true
-			GameState.objective = "Turn the lights on."
+			GameState.set_objective("Turn the lights on.")
+			self:add_hint("Press [E] to interact with surroundings.")
 		end
 	})
 

@@ -10,4 +10,12 @@ function GameState.resume()
 	GameState.can_player_move = true
 end
 
+function GameState.set_objective(s)
+	GameState.objective = s
+end
+
+function GameState.clear_objective()
+	GameState.objective = nil
+end
+
 return GameState

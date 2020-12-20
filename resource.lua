@@ -44,6 +44,8 @@ function Resource.load()
 
 	-- credits: https://opengameart.org/content/menu-selection-click
 	sfx.Hint = la.newSource("assets/sound/hint.ogg", "static")
+	sfx.PhoneRing = la.newSource("assets/sound/phone-ring.ogg", "static")
+	sfx.PhoneRing:setVolume(0.05)
 
 	local rf = Resource.Font
 	rf.dialog = lg.newFont("assets/font/VCR_OSD_MONO_1.001.ttf", 22)
