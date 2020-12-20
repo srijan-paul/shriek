@@ -18,7 +18,7 @@ function UISprite:draw()
 	local dp = Vec2(0, 0)
 	local x = t.pos.x - dp.x
 	local y = t.pos.y - dp.y
-	local pos = camera:toScreenPos(Vec2(x, y))
+	local pos = Vec2(camera:toScreenX(x), camera:toScreenY(y))
 	lg.draw(self.img, pos.x, pos.y, t.r)
 end
 

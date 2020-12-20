@@ -44,7 +44,7 @@ end
 
 math.randomseed(os.time())
 
-local display_scale = 1
+_G.DISPLAY_SCALE = 1
 function love.load()
 
 	-- record the screen width and screen height of the player's monitor
@@ -54,13 +54,13 @@ function love.load()
 	_G.SC_WIDTH = love.graphics.getWidth()
 	_G.SC_HEIGHT = love.graphics.getHeight()
 
-	display_scale = SC_HEIGHT / WIN_HEIGHT
+	DISPLAY_SCALE = SC_HEIGHT / WIN_HEIGHT
 	SCREEN_OFFSET_X = (SC_WIDTH - WIN_WIDTH) / 4
 	love.window
 			.setMode(SC_WIDTH, SC_HEIGHT, {fullscreen = GameSettings.fullscreen})
 
-	DISPLAY_WIDTH = SC_WIDTH * display_scale
-	DISPLAY_HEIGHT = SC_HEIGHT * display_scale
+	DISPLAY_WIDTH = SC_WIDTH * DISPLAY_SCALE
+	DISPLAY_HEIGHT = SC_HEIGHT * DISPLAY_SCALE
 
 	lg.setLineStyle("rough")
 	love.mouse.setVisible(IS_MOUSE_POINTER_VISIBLE)
@@ -91,7 +91,7 @@ function love.draw()
 	game.shade(shader)
 	-- shader:send("screen_size", {SC_WIDTH, SC_HEIGHT})
 	love.graphics.setShader(shader)
-	lg.draw(main_canvas, SCREEN_OFFSET_X, 0, 0, display_scale, display_scale)
+	lg.draw(main_canvas, SCREEN_OFFSET_X, 0, 0, DISPLAY_SCALE, DISPLAY_SCALE)
 	love.graphics.setShader()
 
 	Moan.draw()

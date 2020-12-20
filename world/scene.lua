@@ -7,8 +7,8 @@ local ZOOM = 4.0
 function Scene:init()
 	self.current_room = House.BedRoom
 	camera:zoom(ZOOM)
-	local xoff = (self.current_room.width - DISPLAY_WIDTH / ZOOM) / 2
-	local yoff = (self.current_room.height - DISPLAY_HEIGHT / ZOOM) / 2
+	local xoff = (self.current_room.width - WIN_WIDTH / ZOOM) / 2
+	local yoff = (self.current_room.height - WIN_HEIGHT / ZOOM) / 2
 	camera:setPos(xoff, yoff)
 	self.player = Player(self.current_room.world, 85 / 2, 93 / 2)
 
@@ -22,6 +22,7 @@ function Scene:draw()
 end
 
 function Scene:ui_layer()
+	lg.print("Objective: Find a torchlight", 10, 10)
 	self.current_room:ui_layer()
 end
 

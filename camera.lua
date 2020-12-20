@@ -32,8 +32,8 @@ function camera:update(dt)
 	if not self.follow_target.pos then
 		return
 	end
-	self.pos.x = self.follow_target.pos.x - (SC_WIDTH * self.scaleX) / 2
-	self.pos.y = self.follow_target.pos.y - (SC_HEIGHT * self.scaleY) / 2
+	self.pos.x = self.follow_target.pos.x - (WIN_WIDTH * self.scaleX) / 2
+	self.pos.y = self.follow_target.pos.y - (WIN_HEIGHT * self.scaleY) / 2
 end
 
 function camera:set()
@@ -52,7 +52,7 @@ function camera:zoom(z)
 	self.scaleY = 1 / z
 end
 
-function camera:get_zoom()
+function camera:getZoom()
 	return 1 / self.scaleX
 end
 
@@ -62,11 +62,11 @@ function camera:scale(sx, sy)
 end
 
 function camera:toScreenX(x)
-	return (x - self.pos.x) / self.scaleX
+	return SCREEN_OFFSET_X + (x - self.pos.x) / (self.scaleX / DISPLAY_SCALE)
 end
 
 function camera:toScreenY(y)
-	return (y - self.pos.y) / self.scaleY
+	return (y - self.pos.y) / (self.scaleY / DISPLAY_SCALE)
 end
 
 function camera:toWorldX(x)

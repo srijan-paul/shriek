@@ -33,7 +33,7 @@ function Direction.string(dir)
 	return dir_strs[dir]
 end
 
-_G.GameSettings = {fullscreen = false}
+_G.GameSettings = {fullscreen = true}
 _G.DISPLAY_WIDTH = 800
 _G.DISPLAY_HEIGHT = 600
 
