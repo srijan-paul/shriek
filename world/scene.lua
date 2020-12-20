@@ -18,7 +18,6 @@ function Scene:init()
 	self.player = Player(self.current_room.world, 85 / 2, 93 / 2)
 	GameState.can_player_move = false
 
-	Resource.Sfx.Rain:play()
 
 	Say {"You", "What was that noise just now?"}
 	Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
@@ -88,6 +87,10 @@ end
 function Scene:add_hint(msg)
 	self:add_message({HINT_COLOR, "HINT: ", {1, 1, 1}, msg}, 5, true)
 	Resource.Sfx.Hint:play()
+end
+
+function Scene:keypressed(k)
+	
 end
 
 function Scene.MoveEntity(ent, w1, w2)

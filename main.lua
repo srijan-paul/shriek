@@ -1,7 +1,14 @@
 local shader = require("shader")
+local Intro = require "world.intro"
+
 _G.lg = love.graphics
 _G.lk = love.keyboard
 _G.lm = love.mouse
+
+_G.ITEM_COLOR = {0.2, 0.8, 0.1}
+_G.YELLOW = {1, 0.8, 0.5}
+_G.GREEN = {sugar.rgb("#00b894")}
+_G.WHITE = {1, 1, 1}
 
 -- more global libraries
 _G.Moan = require "lib.moan.moan"
@@ -74,6 +81,7 @@ function love.load()
 
 	_G.Input = require "lib.boipushy.input"()
 	Resource.load()
+	Intro:load()
 	game.load()
 
 	Moan.typeSound = Resource.Sfx.Type
@@ -87,10 +95,11 @@ function love.draw()
 		game.draw()
 	end)
 
-	-- send data to `shader` here.
-	game.shade(shader)
-	-- shader:send("screen_size", {SC_WIDTH, SC_HEIGHT})
-	love.graphics.setShader(shader)
+	if game.shading then
+		game.shade(shader)
+		-- send data to `shader` here.
+		love.graphics.setShader(shader)
+	end
 	lg.draw(main_canvas, SCREEN_OFFSET_X, 0, 0, DISPLAY_SCALE, DISPLAY_SCALE)
 	love.graphics.setShader()
 

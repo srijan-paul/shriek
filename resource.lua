@@ -31,6 +31,14 @@ function Resource.load()
 	sfx.Ambient1:setLooping(true)
 	sfx.Ambient1:play()
 
+	-- credits: https://freesound.org/people/klankbeeld
+	sfx.Lullaby = la.newSource(
+			"assets/sound/369542__klankbeeld__musicbox-brahms-lullaby-loop.ogg", "stream")
+	sfx.Lullaby:setVolume(0.8)
+
+	-- credit: https://opengameart.org/content/breaking-bottle
+	-- spookymodem
+	sfx.GlassBreak = la.newSource("assets/sound/Bottle-Break.ogg", "static")
 	-- credits: https://opengameart.org/content/light-switch-on-sfx-sound-effect
 	sfx.SwitchOn = la.newSource("assets/sound/Light-Switch-Click-On-Sfx.ogg",
 			"static")
@@ -42,6 +50,8 @@ function Resource.load()
 	sfx.Rain = la.newSource("assets/sound/Dark_Rainy_Nightambience.ogg", "stream")
 	sfx.Rain:setVolume(0.02)
 
+	sfx.Knock3 = la.newSource("assets/sound/6501__rondomat__knocking-3.ogg", "static")
+
 	-- credits: https://opengameart.org/content/menu-selection-click
 	sfx.Hint = la.newSource("assets/sound/hint.ogg", "static")
 	sfx.PhoneRing = la.newSource("assets/sound/phone-ring.ogg", "static")
@@ -50,6 +60,7 @@ function Resource.load()
 	local rf = Resource.Font
 	rf.dialog = lg.newFont("assets/font/VCR_OSD_MONO_1.001.ttf", 22)
 	rf.Ui = lg.newFont("assets/font/rainyhearts.ttf", 25)
+	rf.Misc = lg.newFont("assets/font/Louis George Cafe.ttf", 20)
 
 	local rc = Resource.Canvases
 	rc.interact_btn = lg.newText(rf.Ui, "Interact")

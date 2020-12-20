@@ -1,7 +1,10 @@
 local Scene = require "world.scene"
 local Dialog = require "dialog"
-local State = require "gamestate"
-local game = {}
+local GameState = require "gamestate"
+local Intro = require "world.intro"
+local game = {
+	shading = false
+}
 
 local vision_opts = require "torch"
 
@@ -9,14 +12,17 @@ _G.Say = function(dialog, props)
 	Moan.speak({dialog[1], {1, 0.8, 0.5}}, {dialog[2]}, props)
 end
 
-_G.ITEM_COLOR = {0.2, 0.8, 0.1}
-_G.YELLOW = {1, 0.8, 0.5}
-_G.GREEN = {sugar.rgb("#00b894")}
 
 local current_scene
 function game.load()
 	local house = require "world.house"
 	house.load()
+	current_scene = Intro
+	GameState.game = game
+end
+
+function game.start()
+	game.shading = true
 	current_scene = Scene()
 end
 
@@ -46,9 +52,14 @@ function game.shade(shader)
 end
 
 function love.keypressed(key)
-	if key == "q" and State.events.torch_found then
+	current_scene:keypressed(key)
+	if key == "q" and GameState.events.torch_found then
 		vision_opts:toggle()
 	end
+end
+
+function game.set_scene(s)
+	current_scene = s
 end
 
 return game
