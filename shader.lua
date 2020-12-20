@@ -28,7 +28,7 @@ vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 screen_coords) 
   }
 
   if (!los_on) {
-    color.a = 0.08;
+    color.a = 0.12;
     return pixel * color;
   }
 

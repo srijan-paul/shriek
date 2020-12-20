@@ -5,8 +5,8 @@ local game = {}
 
 local vision_opts = require "torch"
 
-_G.Say = function(dialog)
-	Moan.speak({dialog[1], {1, 0.8, 0.5}}, {dialog[2]})
+_G.Say = function(dialog, props)
+	Moan.speak({dialog[1], {1, 0.8, 0.5}}, {dialog[2]}, props)
 end
 
 local current_scene

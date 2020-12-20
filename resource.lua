@@ -32,9 +32,13 @@ function Resource.load()
 	-- credits: https://opengameart.org/content/light-switch-on-sfx-sound-effect
 	sfx.SwitchOn = la.newSource("assets/sound/Light-Switch-Click-On-Sfx.ogg",
 			"static")
+	-- credits: https://opengameart.org/content/pickupplastic-sound
+	-- Vinrax on OpenGameArt
+	sfx.ItemPickup = la.newSource("assets/sound/pickup.ogg", "static")
 
 	local rf = Resource.Font
 	rf.dialog = lg.newFont("assets/font/VCR_OSD_MONO_1.001.ttf", 22)
+	rf.Ui = lg.newFont("assets/font/rainyhearts.ttf", 25)
 
 	local rc = Resource.Canvases
 	rc.interact_btn = lg.newText(rf.dialog, "Interact")
