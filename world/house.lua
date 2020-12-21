@@ -138,7 +138,7 @@ local function entrance_init(world)
 		Say {"You", "Hello... ?"}
 		RSay {"Phone", "Do your parents tell you bedtime stories?"}
 		Say {"You", "Who is this?"}
-		RSay {"Phone", "Those fantastical stories about dieties and demons,--ever heard of them?"}
+		RSay {"Phone", "Those strange stories about dieties and demons,--ever heard of them?"}
 		Say {"You", "Im sorry sir,--Mom isn't home."}
 		RSay {"Phone", "Those stories are all true,Timmy."}
 		Say {"You (shivering)", "Please tell me who you are"}
@@ -147,9 +147,15 @@ local function entrance_init(world)
 		Say {"You", "Does my dad know you?"}
 		RSay {"Phone", "Chit chat later,--that hideous thing is gnawing on the telephone cables"
 			.. " outside your house."}
-		RSay {"Phone", "Find your dad's pager in his study room,--And remember - (noise) - n-t dem.. in."}
+		RSay ({"Phone", "Find your dad's pager in his study room,--And remember - (noise) - n-t dem.. in."}, {
+			oncomplete = function ()
+				GState.set_objective("Find a pager in dad's room.")
+				Resource.Sfx.Beep:play()
+			end
+		})
 		RSay {"Phone", "(beep)"}
 		telephone:on_trigger(function ()
+			Resource.Sfx.Beep:play()
 			RSay {"Phone", "(beep)"}
 		end)
 	end)

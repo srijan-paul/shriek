@@ -58,6 +58,11 @@ function Resource.load()
 	sfx.PhoneRing = la.newSource("assets/sound/phone-ring.ogg", "static")
 	sfx.PhoneRing:setVolume(0.05)
 
+	-- credit: https://opengameart.org/content/bad-sound-1
+	sfx.Objective = la.newSource("assets/sound/lose-sound-1_0.ogg", "static")
+	sfx.Beep = la.newSource("assets/sound/beep.ogg", "static")
+
+
 	local rf = Resource.Font
 	rf.dialog = lg.newFont("assets/font/VCR_OSD_MONO_1.001.ttf", 22)
 	rf.Ui = lg.newFont("assets/font/rainyhearts.ttf", 25)
