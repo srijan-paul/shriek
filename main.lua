@@ -9,6 +9,7 @@ _G.ITEM_COLOR = {0.2, 0.8, 0.1}
 _G.YELLOW = {1, 0.8, 0.5}
 _G.GREEN = {sugar.rgb("#00b894")}
 _G.WHITE = {1, 1, 1}
+_G.L_RED = {sugar.rgb("#ff7675")}
 
 -- more global libraries
 _G.Moan = require "lib.moan.moan"
@@ -85,7 +86,7 @@ function love.load()
 	game.load()
 
 	Moan.typeSound = Resource.Sfx.Type
-	Moan.font = Resource.Font.dialog
+	Moan.font = Resource.Font.Ui
 end
 
 local main_canvas = love.graphics.newCanvas()

@@ -1,12 +1,9 @@
 local Room = require "world.room"
 local Prop = require "prefabs.prop"
 local Wall = require "prefabs.wall"
-local Entt = require "prefabs.entity"
 local Area = require "prefabs.area"
 local Interactable = require "prefabs.interactable"
 local Dialog = require "dialog"
-
-
 local GState = require "gamestate"
 
 local House = {}
@@ -70,23 +67,24 @@ local function bedroom_init(world)
 			Say {"You", "Who could be calling at this hour?"}
 			Say({"You", "I hope it's mom and dad. I want them to come back."}, {
 				oncomplete = function()
+					GState.events.phone_rang = true
 					GState.set_objective("Recieve the call.")
 				end
 			})
 		end)
 	end, 5)
 
-	local clock = Interactable(world, 29, 12, {range = 20})
-	clock:on_trigger(function()
+	-- clock
+	Interactable(world, 29, 12, {range = 20}):on_trigger(function()
 		Say {"You", "It's past midnight..."}
 	end)
 
-	local light_switch = Interactable(world, 55, 19, {
+	-- light switch
+	Interactable(world, 55, 19, {
 		range = 10,
 		vision_triggered = false,
 		text = {YELLOW, "use"}
-	})
-	light_switch:on_trigger(function()
+	}):on_trigger(function()
 		Say {"You", "The lights are out. A powercut?"}
 
 		if not GState.events.torch_found then
@@ -99,19 +97,18 @@ local function bedroom_init(world)
 		end
 	end)
 
-	-- TODO fix direction
+	-- TODO fix direction by adding an intermediate room.
 	local btm_door = Area(world, 42, 88, 18, 13)
 	btm_door:on_body_enter(function (e)
 		if e.id == "player" then
-			if not GState.events.torch_found then
+			if not GState.events.phone_rang then
 				Dialog:start_seq()
-				Say {"You", "I shouldn't leave my room when it's dark."}
+				Say {"You", "I shouldn't leave my room at night."}
 			else 
 				GState.current_scene():switch_room(House.Entrance, Direction.RIGHT)
 			end
 		end
-	end)
-		
+	end)	
 end
 
 local function livingroom_init(world)
@@ -131,7 +128,31 @@ local function livingroom_init(world)
 end
 
 local function entrance_init(world)
-	Wall(world, 64, 12, 128, 15)
+	Wall(world, 64, 12, 128, 10)
+
+	local telephone = Interactable(world, 89, 20, {range = 10})
+	
+	telephone:on_trigger(function ()
+		if not GState.events.phone_rang then return end
+		Resource.Sfx.PhoneRing:stop()
+		Say {"You", "Hello... ?"}
+		RSay {"Phone", "Do your parents tell you bedtime stories?"}
+		Say {"You", "Who is this?"}
+		RSay {"Phone", "Those fantastical stories about dieties and demons,--ever heard of them?"}
+		Say {"You", "Im sorry sir,--Mom isn't home."}
+		RSay {"Phone", "Those stories are all true,Timmy."}
+		Say {"You (shivering)", "Please tell me who you are"}
+		RSay {"Phone", "I am a Shaman, the name is Liam.--Listen up kid, don't hang up.--"
+		.. " You won't be able to make any phone calls after this."}
+		Say {"You", "Does my dad know you?"}
+		RSay {"Phone", "Chit chat later,--that hideous thing is gnawing on the telephone cables"
+			.. " outside your house."}
+		RSay {"Phone", "Find your dad's pager in his study room,--And remember - (noise) - n-t dem.. in."}
+		RSay {"Phone", "(beep)"}
+		telephone:on_trigger(function ()
+			RSay {"Phone", "(beep)"}
+		end)
+	end)
 end
 
 function House.load()
