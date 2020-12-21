@@ -34,10 +34,10 @@ end
 local Letter = [[
 Timmy,
 Your father and I have to leave the village for a while to tend to some important work.]] ..
-               		[[I'm really sorry that you have to stay the night alone. We will be back by dawn.
+[[I'm really sorry that you have to stay the night alone. We will be back by dawn.
 
-Keep the doors locked, and don't forget to feed the cat! The village watchmen]] ..
-               		[[will be guarding the area so you can sleep well. In the event of an emergency,
+Keep the doors locked, and don't forget to feed the cat! The village watchmen ]] ..
+[[will be guarding the area so you can sleep well. In the event of an emergency,
 call the village chief. Take care.
 
 Love, 

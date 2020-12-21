@@ -58,7 +58,9 @@ function House.load()
 				GState.events.torch_found = true
 				Say({"You", "That's better."}, {
 					oncomplete = function()
-						House.BedRoom.scene:add_hint("Press [Q] to switch flashlight on and off.")
+						House.BedRoom.scene:add_hint({
+							"Press [", YELLOW, "Q", WHITE, "] to switch flashlight on and off."
+						})
 						GState.clear_objective()
 					end
 				})
@@ -72,10 +74,17 @@ function House.load()
 		Prop(world, 70, 70, {collision = {width = 12, height = 14}})
 
 		local mess = Interactable(world, 19, 66, {range = 15})
+		--- TODO clean up this code here.
+		local phone_event_finished = false
 		mess:on_trigger(function()
 			Say {"You", "Mom will be mad if she sees this mess."}
 		end)
 		mess:on_end(function()
+			if phone_event_finished then 
+				mess:on_end(nil)
+				return 
+			end
+			phone_event_finished = true
 			Resource.Sfx.PhoneRing:setLooping(true)
 			Moan.clearMessages()
 			GState.can_player_move = false
@@ -84,7 +93,7 @@ function House.load()
 			Timer.after(2, function()
 				Dialog:start_seq()
 				Say {"You", "Who could be calling at this hour?"}
-				Say ({"You", "I hope it's mom and dad. I want them to come back."}, {
+				Say({"You", "I hope it's mom and dad. I want them to come back."}, {
 					oncomplete = function()
 						GState.set_objective("Recieve the call.")
 					end

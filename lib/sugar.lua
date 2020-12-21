@@ -148,12 +148,39 @@ function sugar.contains(t, v)
     return false
 end
 
+---returns a new table containing items from both tables in order.
+---@param t1 table
+---@param t2 table
+---@return table
+function sugar.t_join(t1, t2)
+    local t = {}
+    for _, v in ipairs(t1) do table.insert(t, v) end
+    for _, v in ipairs(t2) do table.insert(t, v) end
+    return t
+end
 
+---appends the contents of table `t2` at the end of `t1`
+---@param t1 table
+---@param t2 table
+---@return table
+function sugar.t_append(t1, t2)
+    for _, v in ipairs(t2) do 
+        table.insert(t1, v) 
+    end
+    return t1
+end
+
+---returns true if the character passed is an ascii digit.
+---@param d string
+---@return boolean
 function sugar.is_digit(d)
     local ascii = string.byte(d)
     return ascii >= 48 and ascii <= 57
 end
 
+---returns true if the character passed is an ascii alphabet (a-zA-Z).
+---@param char string
+---@return boolean
 function sugar.is_alpha(char)
     local ascii = string.byte(char)
     return (ascii >= 65 and ascii <= 90) or (ascii >= 97 and ascii <= 122)

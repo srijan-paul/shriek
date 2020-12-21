@@ -6,6 +6,7 @@ local GameState = require "gamestate"
 local FloatingText = require "prefabs.floating_text"
 
 local HINT_COLOR = {sugar.rgb("#0984e3")}
+local HINT_PREFIX = {HINT_COLOR, "HINT: ", WHITE}
 
 local ZOOM = 4.0
 function Scene:init()
@@ -18,13 +19,14 @@ function Scene:init()
 	self.player = Player(self.current_room.world, 85 / 2, 93 / 2)
 	GameState.can_player_move = false
 
-
 	Say {"You", "What was that noise just now?"}
 	Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
 		oncomplete = function()
 			GameState.can_player_move = true
 			GameState.set_objective("Turn the lights on.")
-			self:add_hint("Press [E] to interact with surroundings.")
+			self:add_hint({
+				"Press [", YELLOW, "E", WHITE, "] to interact with surroundings."
+			})
 		end
 	})
 
@@ -85,12 +87,18 @@ function Scene:add_message(text, duration, fade_out)
 end
 
 function Scene:add_hint(msg)
-	self:add_message({HINT_COLOR, "HINT: ", {1, 1, 1}, msg}, 5, true)
+	if (type(msg) == "table") then
+		self:add_message(sugar.t_join(HINT_PREFIX, msg), 5, true)
+	else
+		local t = {unpack(HINT_PREFIX)}
+		table.insert(t, msg)
+		self:add_message(t, 5, true)
+	end
 	Resource.Sfx.Hint:play()
 end
 
 function Scene:keypressed(k)
-	
+
 end
 
 function Scene.MoveEntity(ent, w1, w2)
