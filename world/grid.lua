@@ -111,6 +111,12 @@ function Grid:process_collisions()
 	end
 end
 
+
+local function rect_intersect(x1, y1, w1, h1, x2, y2, w2, h2)
+	return not ((x1 > x2 + w2) or (x1 + w1 < x2) or
+	(y1 + h1 < y2) or (y1 > y2 + h2))
+end
+
 local grid_query = {
 	["circle"] = function(grid, center, radius)
 		local x = center.x
@@ -126,6 +132,29 @@ local grid_query = {
 					local pos = grid.cells[i][j][k]:get_pos()
 					if (pos - center):mag() < radius then
 						table.insert(game_objects, grid.cells[i][j][k].owner)
+					end
+				end
+			end
+		end
+
+		return game_objects
+	end,
+
+	["rect"] = function (grid, topleft, w, h)
+		local x, y = topleft.x, topleft.y
+		local start_row, start_col = grid:toRowCol(x, y)
+		local end_row, end_col = grid:toRowCol(x + w, y + h)
+
+		local game_objects = {}
+
+		for i = start_row, end_row do
+			for j = start_col, end_col do
+				local cell = grid.cells[i][j]
+				for k = 1, #cell do
+					local c =  cell[k]
+					local tl = c:topleft()
+					if rect_intersect(x, y, w, h, tl.x, tl.y, c.width, c.height) then
+						table.insert(game_objects, c.owner)
 					end
 				end
 			end

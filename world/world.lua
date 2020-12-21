@@ -171,6 +171,12 @@ end
 function World:add_gameobject(e)
 	-- TODO: register and handle collision classes as well
 	e.world = self
+	for _, comp in ipairs(e._components) do
+		if comp.add_to_world then
+			comp._delete_flag = false
+			comp:add_to_world(self)
+		end
+	end
 	tinsert(self.entities, e)
 end
 
@@ -180,6 +186,11 @@ end
 
 function World:remove_gameobject(g)
 	g._delete_flag = true
+	for _, comp in ipairs(g._components) do
+		if comp.remove_from_world then
+			comp._delete_flag = true
+		end
+	end
 end
 
 function World:query(shape, tl, w, h)

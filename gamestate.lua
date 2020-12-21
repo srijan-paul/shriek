@@ -27,4 +27,8 @@ function GameState.start_game()
 	GameState.game.start()
 end
 
+function GameState.current_scene()
+	return GameState.game.current_scene
+end
+
 return GameState

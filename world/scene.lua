@@ -9,13 +9,18 @@ local HINT_COLOR = {sugar.rgb("#0984e3")}
 local HINT_PREFIX = {HINT_COLOR, "HINT: ", WHITE}
 
 local ZOOM = 4.0
+
+local function set_cam(room)
+	local xoff = (room.width - WIN_WIDTH / ZOOM) / 2
+	local yoff = (room.height - WIN_HEIGHT / ZOOM) / 2
+	camera:setPos(xoff, yoff)
+end
+
 function Scene:init()
 	self.current_room = House.BedRoom
 	self.current_room.scene = self
 	camera:zoom(ZOOM)
-	local xoff = (self.current_room.width - WIN_WIDTH / ZOOM) / 2
-	local yoff = (self.current_room.height - WIN_HEIGHT / ZOOM) / 2
-	camera:setPos(xoff, yoff)
+	set_cam(self.current_room)
 	self.player = Player(self.current_room.world, 85 / 2, 93 / 2)
 	GameState.can_player_move = false
 
@@ -101,8 +106,20 @@ function Scene:keypressed(k)
 
 end
 
-function Scene.MoveEntity(ent, w1, w2)
+function Scene:switch_room(room, dir)
+	Scene.MoveEntity(self.player, self.current_room, room)
+	self.current_room = room
+	set_cam(self.current_room)
+	local entry_loc = assert(room.entry_points[dir])
+	self.player:set_pos(entry_loc)
+end
 
+--- Moves entity `ent` from `prev_room` to `next_room`, `exit_dir` is the direction of exit
+--- used.
+function Scene.MoveEntity(ent, prev_room, next_room, exit_dir)
+	prev_room.world:remove_gameobject(ent)
+	prev_room.world:clear_garbage()
+	next_room.world:add_gameobject(ent)
 end
 
 return Scene

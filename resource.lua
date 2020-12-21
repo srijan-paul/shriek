@@ -9,6 +9,7 @@ function Resource.load()
 	rs.Box = lg.newImage("assets/images/temp.png")
 	rs.LivingRoom = lg.newImage("assets/images/base_room.png")
 	rs.BedRoom = lg.newImage("assets/images/bedroom.png")
+	rs.FrontRoom = lg.newImage("assets/images/entrance.png")
 	rs.Player = janim.newSpriteSheet("assets/images/player.png", 4, 1)
 	rs.TorchItem = lg.newImage("assets/images/torch.png")
 
