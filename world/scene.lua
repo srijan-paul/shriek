@@ -3,10 +3,7 @@ local camera = require "camera"
 local Player = require "prefabs.player"
 local House = require "world.house"
 local GameState = require "gamestate"
-local FloatingText = require "prefabs.floating_text"
-
-local HINT_COLOR = {sugar.rgb("#0984e3")}
-local HINT_PREFIX = {HINT_COLOR, "HINT: ", WHITE}
+local HUD = require "world.hud"
 
 local ZOOM = 4.0
 
@@ -29,16 +26,11 @@ function Scene:init()
 		oncomplete = function()
 			GameState.can_player_move = true
 			GameState.set_objective("Turn the lights on.")
-			self:add_hint({
+			HUD:add_hint({
 				"Press [", YELLOW, "E", WHITE, "] to interact with surroundings."
 			})
 		end
 	})
-
-	-- contains all floating text items.
-	self.message_area = {}
-	self.msg_pos = 2 * SC_HEIGHT / 3
-	self.msg_pad = 5
 end
 
 function Scene:draw()
@@ -46,14 +38,7 @@ function Scene:draw()
 end
 
 function Scene:ui_layer()
-	if GameState.objective then
-		lg.setFont(Resource.Font.Ui)
-		lg.print({{1, 0.8, 0.5}, "Objective: ", {1, 1, 1}, GameState.objective}, 10,
-				10)
-	end
-	for _, d in ipairs(self.message_area) do
-		d:draw()
-	end
+	HUD:draw()
 	self.current_room:ui_layer()
 end
 
@@ -67,39 +52,12 @@ function Scene:update(dt)
 		self.player:handle_input(0, 0)
 	end
 
-	for i = #self.message_area, 1, -1 do
-		local d = self.message_area[i]
-		d:update(dt)
-		if d.dead then
-			table.remove(self.message_area, i)
-			self.msg_pos = self.msg_pos - d.text:getHeight() - self.msg_pad
-		end
-	end
+	HUD:update(dt)
 end
 
 ---returns the screen coordinates of the player
 function Scene:player_screen_coords()
 	return camera:toScreenPos(self.player:get_pos())
-end
-
-function Scene:add_message(text, duration, fade_out)
-	local ftext = FloatingText(text, SC_WIDTH - 220, 10, 0, duration, fade_out)
-	local twidth = ftext.text:getWidth()
-	ftext.x = SC_WIDTH - twidth - 10
-	ftext.y = self.msg_pos
-	self.msg_pos = self.msg_pos + ftext.text:getHeight() + self.msg_pad
-	table.insert(self.message_area, ftext)
-end
-
-function Scene:add_hint(msg)
-	if (type(msg) == "table") then
-		self:add_message(sugar.t_join(HINT_PREFIX, msg), 5, true)
-	else
-		local t = {unpack(HINT_PREFIX)}
-		table.insert(t, msg)
-		self:add_message(t, 5, true)
-	end
-	Resource.Sfx.Hint:play()
 end
 
 function Scene:keypressed(k)

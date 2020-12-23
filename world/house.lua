@@ -5,6 +5,7 @@ local Area = require "prefabs.area"
 local Interactable = require "prefabs.interactable"
 local Dialog = require "dialog"
 local GState = require "gamestate"
+local HUD = require "world.hud"
 
 local House = {}
 
@@ -30,7 +31,7 @@ local function bedroom_init(world)
 			GState.events.torch_found = true
 			Say({"You", "Much better."}, {
 				oncomplete = function()
-					House.BedRoom.scene:add_hint({
+					HUD:add_hint({
 						"Press [", YELLOW, "Q", WHITE, "] to switch flashlight on and off."
 					})
 					GState.clear_objective()
@@ -47,10 +48,12 @@ local function bedroom_init(world)
 
 	local mess = Interactable(world, 19, 66, {range = 15})
 	--- TODO clean up this code here.
+	
 	local phone_event_finished = false
 	mess:on_trigger(function()
 		Say {"You", "Mom will be mad if she sees this mess."}
 	end)
+	
 	mess:on_end(function()
 		if phone_event_finished then
 			mess:on_end(nil)
@@ -104,11 +107,11 @@ local function bedroom_init(world)
 			if not GState.events.phone_rang then
 				Dialog:start_seq()
 				Say {"You", "I shouldn't leave my room at night."}
-			else 
+			else
 				GState.current_scene():switch_room(House.Entrance, Direction.RIGHT)
 			end
 		end
-	end)	
+	end)
 end
 
 local function livingroom_init(world)
@@ -131,7 +134,7 @@ local function entrance_init(world)
 	Wall(world, 64, 12, 128, 10)
 
 	local telephone = Interactable(world, 89, 20, {range = 10})
-	
+
 	telephone:on_trigger(function ()
 		if not GState.events.phone_rang then return end
 		Resource.Sfx.PhoneRing:stop()
@@ -154,18 +157,21 @@ local function entrance_init(world)
 			end
 		})
 		RSay {"Phone", "(beep)"}
+		
 		telephone:on_trigger(function ()
 			Resource.Sfx.Beep:play()
 			RSay {"Phone", "(beep)"}
+			Say {"You", "The phone isn't working."}
 		end)
 	end)
 end
 
 function House.load()
+	local LivingRoomImg = Resource.Sprite.LivingRoom
 	House.LivingRoom = Room({
-		width = 128,
-		height = 128,
-		image = Resource.Sprite.LivingRoom
+		width = LivingRoomImg:getWidth(),
+		height = LivingRoomImg:getHeight(),
+		image = LivingRoomImg
 	})
 
 	local BedRoomImg = Resource.Sprite.BedRoom
@@ -182,16 +188,6 @@ function House.load()
 		image = EntrangeImg,
 		entry_points = {[Direction.RIGHT] = Vec2(125, 43)}
 	})
-
-	-- connect the rooms via the doors.
-	-- TODO fix the direction by adding 2 additional intermediate rooms.
-
-	House.Entrance.exits = {
-		[Direction.RIGHT] = {
-			to = House.BedRoom,
-			door = {x = 127, y = 39, w = 3, h = 69}
-		}
-	}
 
 	House.BedRoom:initialize(bedroom_init)
 	House.LivingRoom:initialize(livingroom_init)

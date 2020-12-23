@@ -28,7 +28,7 @@ function Resource.load()
 
 	-- credits: https://opengameart.org/content/ambient-noise
 	sfx.Ambient1 = la.newSource("assets/sound/ambient1.ogg", "static")
-	sfx.Ambient1:setVolume(0.2)
+	sfx.Ambient1:setVolume(0.6)
 	sfx.Ambient1:setLooping(true)
 	sfx.Ambient1:play()
 

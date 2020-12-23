@@ -21,8 +21,8 @@ _G.Speak = Moan.speak
 function game.load()
 	local house = require "world.house"
 	house.load()
-	game.shading = false
-	game.current_scene = Intro
+	game.shading = true
+	game.current_scene = Scene()
 	GameState.game = game
 end
 
