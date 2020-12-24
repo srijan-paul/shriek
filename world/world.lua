@@ -40,7 +40,7 @@ function World:draw()
 	-- 		e:get_component(cmp.Collider):draw()
 	-- 	end
 	-- end
-
+	
 	-- lg.setColor(1, 1, 1, 1)
 	-- love.graphics.rectangle("line", 0, 0, self.width, self.height)
 	-- * / DEBUG CODE
@@ -53,7 +53,7 @@ function World:ui_layer()
 end
 
 -- remove all 'dead' gameobjects/entities
--- from the entities array. Does the same for all 
+-- from the entities array. Does the same for all
 -- drawables.
 function World:clear_garbage()
 	for i = #self.drawables, 1, -1 do
@@ -104,7 +104,7 @@ function World:update(dt)
 end
 
 -- check if an entity's collider is outside the level's rectangle bounds.
--- If so, then clamp the entity's position and call the 
+-- If so, then clamp the entity's position and call the
 -- 'on_world_exit' callback.
 function World:bounds_check(e)
 	if not e:has_component(cmp.Collider) then
@@ -197,7 +197,7 @@ function World:query(shape, tl, w, h)
 	return self.grid:query(shape, tl, w, h)
 end
 
----Returns a table containing all entities having a 
+---Returns a table containing all entities having a
 ---collider component in `radius` range of `center` coordinate.
 ---@param center table Vector representing the center of the query circle
 ---@param radius number search radius

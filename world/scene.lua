@@ -14,23 +14,26 @@ local function set_cam(room)
 end
 
 function Scene:init()
-	self.current_room = House.BedRoom
+	self.current_room = House.Study
 	self.current_room.scene = self
 	camera:zoom(ZOOM)
 	set_cam(self.current_room)
 	self.player = Player(self.current_room.world, 85 / 2, 93 / 2)
-	GameState.can_player_move = false
 
-	Say {"You", "What was that noise just now?"}
-	Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
-		oncomplete = function()
-			GameState.can_player_move = true
-			GameState.set_objective("Turn the lights on.")
-			HUD:add_hint({
-				"Press [", YELLOW, "E", WHITE, "] to interact with surroundings."
-			})
-		end
-	})
+	-- temporary code
+	GameState.events.torch_found = true
+	-- TODO move this code to the room's script
+	-- GameState.can_player_move = false
+	-- Say {"You", "What was that noise just now?"}
+	-- Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
+	-- 	oncomplete = function()
+	-- 		GameState.can_player_move = true
+	-- 		GameState.set_objective("Turn the lights on.")
+	-- 		HUD:add_hint({
+	-- 			"Press [", YELLOW, "E", WHITE, "] to interact with surroundings."
+	-- 		})
+	-- 	end
+	-- })
 end
 
 function Scene:draw()
@@ -72,9 +75,7 @@ function Scene:switch_room(room, dir)
 	self.player:set_pos(entry_loc)
 end
 
---- Moves entity `ent` from `prev_room` to `next_room`, `exit_dir` is the direction of exit
---- used.
-function Scene.MoveEntity(ent, prev_room, next_room, exit_dir)
+function Scene.MoveEntity(ent, prev_room, next_room)
 	prev_room.world:remove_gameobject(ent)
 	prev_room.world:clear_garbage()
 	next_room.world:add_gameobject(ent)

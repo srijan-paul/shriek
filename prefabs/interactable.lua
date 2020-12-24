@@ -34,7 +34,7 @@ function Interactable:init(world, x, y, config)
 	-- when the player is close and presses the Interact button.
 	self.is_callback_running = false
 
-	-- whether this object can only be interacted with when the 
+	-- whether this object can only be interacted with when the
 	-- flashlight is on. Is `true` by default
 	self.vision_triggered = type(config.vision_triggered) == "nil" and true or
                         			config.vision_triggered
@@ -111,4 +111,9 @@ function Interactable:start_sequence()
 	self.callback()
 end
 
+function Interactable:on_collide(_, dir, this_collider, entt_collider)
+	if entt_collider.class == "player" then
+		Entt.resolve_collision(this_collider, entt_collider, dir)
+	end
+end
 return Interactable

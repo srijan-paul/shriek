@@ -48,12 +48,12 @@ local function bedroom_init(world)
 
 	local mess = Interactable(world, 19, 66, {range = 15})
 	--- TODO clean up this code here.
-	
+
 	local phone_event_finished = false
 	mess:on_trigger(function()
 		Say {"You", "Mom will be mad if she sees this mess."}
 	end)
-	
+
 	mess:on_end(function()
 		if phone_event_finished then
 			mess:on_end(nil)
@@ -157,7 +157,7 @@ local function entrance_init(world)
 			end
 		})
 		RSay {"Phone", "(beep)"}
-		
+
 		telephone:on_trigger(function ()
 			Resource.Sfx.Beep:play()
 			RSay {"Phone", "(beep)"}
@@ -166,32 +166,64 @@ local function entrance_init(world)
 	end)
 end
 
+
+local function studyroom_init(world)
+	Wall(world, 64, 12, 128, 18)
+	local shelf = Interactable(world, 48, 17, {range = 10, collider = {width = 10, height = 22}})
+	local books = Interactable(world, 75, 21, {range = 10, collider = {width = 32, height = 17}})
+	local cupboard = Interactable(world, 112, 19, {range = 10, collider = {width = 22, height = 17}})
+
+	local rtable = Interactable(world, 67, 57, {range = 10, collider = {width = 12, height = 12}})
+
+	local table = Interactable(world, 25, 90, {range = 10, collider = {width = 25, height = 9}})
+
+	Prop(world, 7, 90, {collision = {width = 5, height = 5}})
+	Prop(world, 22, 98, {collision = {width = 5, height = 4}})
+
+
+end
+
 function House.load()
 	local LivingRoomImg = Resource.Sprite.LivingRoom
-	House.LivingRoom = Room({
+	House.LivingRoom = Room {
 		width = LivingRoomImg:getWidth(),
 		height = LivingRoomImg:getHeight(),
 		image = LivingRoomImg
-	})
+	}
 
 	local BedRoomImg = Resource.Sprite.BedRoom
-	House.BedRoom = Room({
+	House.BedRoom = Room {
 		width = BedRoomImg:getWidth(),
 		height = BedRoomImg:getHeight(),
 		image = BedRoomImg
-	})
+	}
 
 	local EntrangeImg = Resource.Sprite.FrontRoom
-	House.Entrance = Room({
+	House.Entrance = Room {
 		width = EntrangeImg:getWidth(),
 		height = EntrangeImg:getHeight(),
 		image = EntrangeImg,
 		entry_points = {[Direction.RIGHT] = Vec2(125, 43)}
+	}
+
+
+	local StudyRoomImg = Resource.Sprite.StudyRoom
+	House.Study = Room {
+		width = StudyRoomImg:getWidth(),
+		height = StudyRoomImg:getHeight(),
+		image = StudyRoomImg
+	}
+
+	-- experimental sandbox
+	House.SandBox = Room({
+		width = 100, height = 100,
+		image = lg.newImage("assets/images/sb.png")
 	})
 
 	House.BedRoom:initialize(bedroom_init)
 	House.LivingRoom:initialize(livingroom_init)
 	House.Entrance:initialize(entrance_init)
+	House.Study:initialize(studyroom_init)
 end
 
 return House

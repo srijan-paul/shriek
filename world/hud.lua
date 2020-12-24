@@ -1,5 +1,7 @@
 local GameState = require "gamestate"
 local FloatingText = require "prefabs.floating_text"
+local Pager = require "prefabs.pager"
+
 
 local HINT_COLOR = {sugar.rgb("#0984e3")}
 local HINT_PREFIX = {HINT_COLOR, "HINT: ", WHITE}
@@ -16,6 +18,8 @@ function hud:draw()
 	for _, d in ipairs(self.messages) do
 		d:draw()
 	end
+
+	Pager:draw()
 end
 
 function hud:update(dt)
@@ -27,6 +31,8 @@ function hud:update(dt)
 			self.msg_pos = self.msg_pos - d.text:getHeight() - self.msg_pad
 		end
 	end
+
+	Pager:update(dt)
 end
 
 function hud:add_message(text, duration, is_fade_out)
