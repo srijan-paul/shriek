@@ -3,7 +3,9 @@ local PMenu = {
 	is_visible = false,
 	select_alpha = 1,
 	d_alpha = 0.01,
-	min_alpha = 0.6
+	min_alpha = 0.6,
+	callbacks = {},
+	selected_opt = 1
 }
 
 local ALPHA = 0.8
@@ -23,12 +25,19 @@ local ypad = font:getHeight() + 4
 
 local function make_opt(text)
 	local t_obj = lg.newText(font, text)
-	return {text = t_obj, w = t_obj:getWidth(), h = t_obj:getHeight()}
+	return {
+		text = t_obj,
+		w = t_obj:getWidth(),
+		h = t_obj:getHeight(),
+		rawtext = text
+	}
 end
 
-local buttons = {make_opt("INVENTORY"), make_opt("RESUME"), make_opt("QUIT")}
+PMenu.buttons = {make_opt("INVENTORY"), make_opt("RESUME"), make_opt("QUIT")}
 
-local selected_opt = 1
+PMenu.callbacks["RESUME"] = function()
+	PMenu:deactivate()
+end
 
 function PMenu:load()
 
@@ -44,8 +53,8 @@ function PMenu:draw()
 	lg.setColor(1, 1, 1)
 
 	lg.setFont(font)
-	for i, b in ipairs(buttons) do
-		if selected_opt == i then
+	for i, b in ipairs(self.buttons) do
+		if self.selected_opt == i then
 			lg.setColor(HIGHLIGHT_COLOR[1], HIGHLIGHT_COLOR[2], HIGHLIGHT_COLOR[3],
 					self.select_alpha)
 			lg.rectangle("fill", x - 2, y - 2, b.w + 4, b.h + 2)
@@ -59,7 +68,9 @@ function PMenu:draw()
 end
 
 function PMenu:update(_)
-  if not self.is_visible then return end
+	if not self.is_visible then
+		return
+	end
 	self.select_alpha = self.select_alpha - self.d_alpha
 	if self.select_alpha <= self.min_alpha or self.select_alpha >= 1 then
 		self.d_alpha = self.d_alpha * -1
@@ -67,37 +78,47 @@ function PMenu:update(_)
 end
 
 function PMenu:keypressed(k)
+	local play_sel_sound = false
 	if k == "up" or k == "w" then
-		selected_opt = selected_opt - 1
-		if selected_opt < 1 then
-			selected_opt = #buttons
+		self.selected_opt = self.selected_opt - 1
+		if self.selected_opt < 1 then
+			self.selected_opt = #self.buttons
 		end
+		play_sel_sound = true
 	elseif k == "down" or k == "s" then
-		selected_opt = selected_opt + 1
-		if selected_opt > #buttons then
-			selected_opt = 1
+		self.selected_opt = self.selected_opt + 1
+		if self.selected_opt > #self.buttons then
+			self.selected_opt = 1
 		end
-  elseif k == "escape" then
-    self:deactivate()
-  else
+		play_sel_sound = true
+	elseif k == "escape" then
+		self:deactivate()
+	elseif k == "return" then
+		local cb = self.callbacks[self.buttons[self.selected_opt].rawtext]
+		if cb then
+			cb()
+		end
 		return
 	end
 
-	if Resource.Sfx.ui_select:isPlaying() then
-		Resource.Sfx.ui_select:stop()
-	end
+	if play_sel_sound then
+		if Resource.Sfx.ui_select:isPlaying() then
+			Resource.Sfx.ui_select:stop()
+		end
 
-	Resource.Sfx.ui_select:play()
+		Resource.Sfx.ui_select:play()
+	end
 end
 
 function PMenu:activate()
-  self.is_visible = true
-  GameState.set_paused(true)
+	self.is_visible = true
+	self.selected_opt = 1
+	GameState.set_paused(true)
 end
 
 function PMenu:deactivate()
-  self.is_visible = false
-  GameState.set_paused(false)
+	self.is_visible = false
+	GameState.set_paused(false)
 end
 
 return PMenu
