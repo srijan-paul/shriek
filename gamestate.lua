@@ -2,11 +2,13 @@ local GameState = {
 	events = {
 		torch_found = false, -- if the player has found the torch in the beginning of the game
 		phone_rang = false, -- whether the phone rang after the player picked up the torch.
-		phone_conv_done = false, -- phone conversation between Liam and Timmy
+		phone_conv_done = false -- phone conversation between Liam and Timmy
 	},
 	objective = nil,
 	can_player_move = true,
-	game = nil
+	game = nil,
+	is_paused = false,
+	state_before_prev_pause = {can_player_move = true}
 }
 
 function GameState.resume()
@@ -31,6 +33,17 @@ end
 
 function GameState.current_scene()
 	return GameState.game.current_scene
+end
+
+function GameState.set_paused(paused)
+	if paused == false then
+		GameState.can_player_move = GameState.state_before_prev_pause.can_player_move
+	else
+		GameState.state_before_prev_pause.can_player_move = GameState.can_player_move
+		GameState.can_player_move = false
+	end
+	GameState.is_paused = paused
+	GameState.game.is_paused = paused
 end
 
 return GameState

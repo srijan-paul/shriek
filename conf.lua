@@ -41,6 +41,5 @@ function love.conf(t)
 	t.window.fullscreen = GameSettings.fullscreen
 	t.window.title = GameInfo.name
 	t.console = true
-
 	return t
 end

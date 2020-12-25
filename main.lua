@@ -110,11 +110,7 @@ function love.draw()
 end
 
 function love.update(dt)
-	Moan.update(dt)
 	Timer.update(dt)
 	game.update(dt)
 end
 
-function love.keyreleased(key)
-	Moan.keyreleased(key)
-end

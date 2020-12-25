@@ -56,6 +56,11 @@ function Scene:update(dt)
 	else
 		self.player:handle_input(0, 0)
 	end
+
+	if not GameState.is_paused then
+		Moan.update(dt)
+	end
+
 	pmenu:update(dt)
 	HUD:update(dt)
 end
@@ -70,8 +75,14 @@ function Scene:keypressed(k)
 		pmenu:keypressed(k)
 	else 
 		if k == 'escape' then 
-			pmenu.is_visible = not pmenu.is_visible
+			pmenu:activate()
 		end
+	end
+end
+
+function Scene:keyreleased(key)
+	if not GameState.is_paused then
+		Moan.keyreleased(key)
 	end
 end
 

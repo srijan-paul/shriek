@@ -1,3 +1,4 @@
+local GameState = require "gamestate"
 local PMenu = {
 	is_visible = false,
 	select_alpha = 1,
@@ -77,7 +78,7 @@ function PMenu:keypressed(k)
 			selected_opt = 1
 		end
   elseif k == "escape" then
-    self.is_visible = false
+    self:deactivate()
   else
 		return
 	end
@@ -87,6 +88,16 @@ function PMenu:keypressed(k)
 	end
 
 	Resource.Sfx.ui_select:play()
+end
+
+function PMenu:activate()
+  self.is_visible = true
+  GameState.set_paused(true)
+end
+
+function PMenu:deactivate()
+  self.is_visible = false
+  GameState.set_paused(false)
 end
 
 return PMenu

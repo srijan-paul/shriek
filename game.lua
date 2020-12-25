@@ -3,7 +3,8 @@ local Dialog = require "dialog"
 local GameState = require "gamestate"
 local Intro = require "world.intro"
 local game = {
-	shading = false
+	shading = false,
+	is_paused = false
 }
 
 local vision_opts = require "torch"
@@ -40,11 +41,13 @@ function game.ui_layer()
 end
 
 function game.update(dt)
-	Dialog:update()
-	game.current_scene:update(dt)
-	vision_opts.radius = vision_opts.radius + vision_opts.dr
-	if vision_opts.radius > vision_opts.max or vision_opts.radius < vision_opts.min then
-		vision_opts.dr = vision_opts.dr * -1
+	if not game.is_paused then
+		Dialog:update()
+		game.current_scene:update(dt)
+		vision_opts.radius = vision_opts.radius + vision_opts.dr
+		if vision_opts.radius > vision_opts.max or vision_opts.radius < vision_opts.min then
+			vision_opts.dr = vision_opts.dr * -1
+		end
 	end
 end
 
@@ -59,6 +62,12 @@ function love.keypressed(key)
 	game.current_scene:keypressed(key)
 	if key == "q" and GameState.events.torch_found then
 		vision_opts:toggle()
+	end
+end
+
+function love.keyreleased(key)
+	if game.current_scene.keyreleased then
+		game.current_scene:keyreleased(key)
 	end
 end
 
