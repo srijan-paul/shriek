@@ -4,6 +4,7 @@ local Player = require "prefabs.player"
 local House = require "world.house"
 local GameState = require "gamestate"
 local HUD = require "world.hud"
+local pmenu = require "world.pause_menu"
 
 local ZOOM = 4.0
 
@@ -41,8 +42,9 @@ function Scene:draw()
 end
 
 function Scene:ui_layer()
-	HUD:draw()
 	self.current_room:ui_layer()
+	HUD:draw()
+	pmenu:draw()
 end
 
 function Scene:update(dt)
@@ -54,7 +56,7 @@ function Scene:update(dt)
 	else
 		self.player:handle_input(0, 0)
 	end
-
+	pmenu:update(dt)
 	HUD:update(dt)
 end
 
@@ -64,7 +66,13 @@ function Scene:player_screen_coords()
 end
 
 function Scene:keypressed(k)
-
+	if pmenu.is_visible then
+		pmenu:keypressed(k)
+	else 
+		if k == 'escape' then 
+			pmenu.is_visible = not pmenu.is_visible
+		end
+	end
 end
 
 function Scene:switch_room(room, dir)

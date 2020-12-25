@@ -10,7 +10,7 @@ function Room:init(conf, initfn)
 	self.bgImg = conf.image
 	self.entry_points = conf.entry_points or {}
 	if initfn then
-		initfn(self.world)
+		initfn(self.world, self)
 	end
 end
 

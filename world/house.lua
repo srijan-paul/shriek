@@ -146,7 +146,7 @@ local function entrance_init(world)
 		RSay {"Phone", "Those stories are all true,Timmy."}
 		Say {"You (shivering)", "Please tell me who you are"}
 		RSay {"Phone", "I am a Shaman, the name is Liam.--Listen up kid, don't hang up.--"
-		.. " You won't be able to make any phone calls after this."}
+			.. " You won't be able to make any phone calls after this."}
 		Say {"You", "Does my dad know you?"}
 		RSay {"Phone", "Chit chat later,--that hideous thing is gnawing on the telephone cables"
 			.. " outside your house."}
@@ -161,7 +161,7 @@ local function entrance_init(world)
 		telephone:on_trigger(function ()
 			Resource.Sfx.Beep:play()
 			RSay {"Phone", "(beep)"}
-			Say {"You", "The phone isn't working."}
+			Say {"You", "The phone doesn't seem to be working."}
 		end)
 	end)
 end
@@ -173,14 +173,39 @@ local function studyroom_init(world)
 	local books = Interactable(world, 75, 21, {range = 10, collider = {width = 32, height = 17}})
 	local cupboard = Interactable(world, 112, 19, {range = 10, collider = {width = 22, height = 17}})
 
-	local rtable = Interactable(world, 67, 57, {range = 10, collider = {width = 12, height = 12}})
+	local trashbin = Interactable(world, 8, 24, {range = 20, text = {YELLOW, "look"}})
+	trashbin:on_trigger(function ()
+		Say {"You", "This garbage can has some garbage in it."}
+	end)
+
+	-- round table at the center of the room
+	Prop(world, 67, 57, {collision = {width = 12, height = 12}})
+	local pager = Interactable(world, 67, 56, {
+		sprite = Resource.Sprite.PagerItem,
+		range = 14,
+		text = {YELLOW, "Pager"}
+	})
+	pager:on_trigger(function()
+		Resource.Sfx.ItemPickup:play()
+		Say {"You", "This must be the pager he was talking about."}
+		RSay {"Pager", "Good job if you've made it here."}
+		RSay {"Pager", "The bleeper you're using is an old one way pager."}
+		RSay {"Pager", "I know you have many questions,--and I wish I had the time to explain to you the entire situation,--but you'll most likely find out soon anyway."}
+		GState.set_objective("Investigate the room.")
+		pager:delete()
+	end)
+
+	pager:set_scale(0.7, 0.7)
 
 	local table = Interactable(world, 25, 90, {range = 10, collider = {width = 25, height = 9}})
+	local spill = Interactable(world, 110, 117, {range = 10})
+	spill:on_trigger(function()
+		Say {"You", "A broken inkpot and some spilled ink."}
+		Say {"You", "It looks fresh, it broke not too long ago."}
+	end)
 
 	Prop(world, 7, 90, {collision = {width = 5, height = 5}})
 	Prop(world, 22, 98, {collision = {width = 5, height = 4}})
-
-
 end
 
 function House.load()

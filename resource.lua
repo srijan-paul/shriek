@@ -13,6 +13,7 @@ function Resource.load()
 	rs.StudyRoom = lg.newImage("assets/images/study.png")
 	rs.Player = janim.newSpriteSheet("assets/images/player.png", 4, 1)
 	rs.TorchItem = lg.newImage("assets/images/torch.png")
+	rs.PagerItem = lg.newImage("assets/images/pager.png")
 
 	local sfx = Resource.Sfx
 	sfx.Steps = {}
@@ -62,6 +63,11 @@ function Resource.load()
 	-- credit: https://opengameart.org/content/bad-sound-1
 	sfx.Objective = la.newSource("assets/sound/lose-sound-1_0.ogg", "static")
 	sfx.Beep = la.newSource("assets/sound/beep.ogg", "static")
+
+
+	-- UI sfx
+	sfx.ui_select = la.newSource("assets/sound/270401__littlerobotsoundfactory__menu-select-00.ogg", "static")
+	sfx.ui_nav = la.newSource("assets/sound/253168__suntemple__sfx-ui-button-click.wav", "static")
 
 
 	local rf = Resource.Font
