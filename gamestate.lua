@@ -8,8 +8,12 @@ local GameState = {
 	can_player_move = true,
 	game = nil,
 	is_paused = false,
-	state_before_prev_pause = {can_player_move = true}
+	state_before_prev_pause = {can_player_move = true},
+	inventory_items = {},
+	active_item = nil
 }
+
+local inventory = GameState.inventory_items
 
 function GameState.resume()
 	GameState.can_player_move = true
@@ -44,6 +48,10 @@ function GameState.set_paused(paused)
 	end
 	GameState.is_paused = paused
 	GameState.game.is_paused = paused
+end
+
+function GameState.add_item(item)
+	table.insert(GameState.inventory_items, item)
 end
 
 return GameState

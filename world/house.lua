@@ -6,6 +6,7 @@ local Interactable = require "prefabs.interactable"
 local Dialog = require "dialog"
 local GState = require "gamestate"
 local HUD = require "world.hud"
+local Items = require "item_list"
 
 local House = {}
 
@@ -28,6 +29,7 @@ local function bedroom_init(world)
 		Resource.Sfx.ItemPickup:play()
 		Timer.after(0.25, function()
 			Dialog:start_seq()
+			GState.add_item(Items.FlashLight)
 			GState.events.torch_found = true
 			Say({"You", "Much better."}, {
 				oncomplete = function()
@@ -175,7 +177,7 @@ local function studyroom_init(world)
 
 	local trashbin = Interactable(world, 8, 24, {range = 20, text = {YELLOW, "look"}})
 	trashbin:on_trigger(function ()
-		Say {"You", "This garbage can has some garbage in it."}
+		Say {"You", "This garbage can has garbage in it."}
 	end)
 
 	-- round table at the center of the room
@@ -187,6 +189,7 @@ local function studyroom_init(world)
 	})
 	pager:on_trigger(function()
 		Resource.Sfx.ItemPickup:play()
+		GState.add_item(Items.Pager)
 		Say {"You", "This must be the pager he was talking about."}
 		RSay {"Pager", "Good job if you've made it here."}
 		RSay {"Pager", "The bleeper you're using is an old one way pager."}

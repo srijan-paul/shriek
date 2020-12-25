@@ -2,10 +2,7 @@ local Scene = require "world.scene"
 local Dialog = require "dialog"
 local GameState = require "gamestate"
 local Intro = require "world.intro"
-local game = {
-	shading = false,
-	is_paused = false
-}
+local game = {shading = false, is_paused = false}
 
 local vision_opts = require "torch"
 
@@ -13,7 +10,7 @@ _G.Say = function(dialog, props)
 	Moan.speak({dialog[1], YELLOW}, {dialog[2]}, props)
 end
 
-_G.RSay = function (dialog, props)
+_G.RSay = function(dialog, props)
 	Moan.speak({dialog[1], L_RED}, {dialog[2]}, props)
 end
 
@@ -22,6 +19,7 @@ _G.Speak = Moan.speak
 function game.load()
 	local house = require "world.house"
 	house.load()
+	Scene.load()
 	game.shading = true
 	game.current_scene = Scene()
 	GameState.game = game
@@ -41,14 +39,13 @@ function game.ui_layer()
 end
 
 function game.update(dt)
-	if not game.is_paused then
-		Dialog:update()
-		game.current_scene:update(dt)
-		vision_opts.radius = vision_opts.radius + vision_opts.dr
-		if vision_opts.radius > vision_opts.max or vision_opts.radius < vision_opts.min then
-			vision_opts.dr = vision_opts.dr * -1
-		end
+	Dialog:update()
+	game.current_scene:update(dt)
+	vision_opts.radius = vision_opts.radius + vision_opts.dr
+	if vision_opts.radius > vision_opts.max or vision_opts.radius < vision_opts.min then
+		vision_opts.dr = vision_opts.dr * -1
 	end
+
 end
 
 function game.shade(shader)

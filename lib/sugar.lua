@@ -100,6 +100,16 @@ function sugar.foreach(arr, func)
     end
 end
 
+---@param t table
+---@param fn function
+function sugar.map(t, fn)
+    local res = {}
+    for i = 1, #t do 
+        table.insert(res, fn(t[i]))
+    end
+    return res
+end
+
 function sugar.sum(t)
     local sum = 0
     for _, v in pairs(t) do sum = sum + v end
@@ -130,6 +140,12 @@ end
 function sugar.clamp(value, min, max)
     if value > max then return max end
     if value < min then return min end
+    return value
+end
+
+function sugar.wrap(value, min, max)
+    if value > max then return min end
+    if value < min then return max end
     return value
 end
 

@@ -4,7 +4,8 @@ local Player = require "prefabs.player"
 local House = require "world.house"
 local GameState = require "gamestate"
 local HUD = require "world.hud"
-local pmenu = require "world.pause_menu"
+local pmenu = require "pause_menu"
+local Inventory = require "inventory_menu"
 
 local ZOOM = 4.0
 
@@ -14,7 +15,12 @@ local function set_cam(room)
 	camera:setPos(xoff, yoff)
 end
 
+function Scene.load()
+	Inventory:load()
+end
+
 function Scene:init()
+	GameState.add_item(require "item_list".FlashLight)
 	self.current_room = House.Study
 	self.current_room.scene = self
 	camera:zoom(ZOOM)
@@ -48,16 +54,16 @@ function Scene:ui_layer()
 end
 
 function Scene:update(dt)
-	self.current_room:update(dt)
-	if GameState.can_player_move then
-		local input_x = Input:keydown("d") - Input:keydown("a")
-		local input_y = Input:keydown("s") - Input:keydown("w")
-		self.player:handle_input(input_x, input_y)
-	else
-		self.player:handle_input(0, 0)
-	end
-
 	if not GameState.is_paused then
+		self.current_room:update(dt)
+		if GameState.can_player_move then
+			local input_x = Input:keydown("d") - Input:keydown("a")
+			local input_y = Input:keydown("s") - Input:keydown("w")
+			self.player:handle_input(input_x, input_y)
+		else
+			self.player:handle_input(0, 0)
+		end
+
 		Moan.update(dt)
 	end
 
@@ -73,8 +79,8 @@ end
 function Scene:keypressed(k)
 	if pmenu.is_visible then
 		pmenu:keypressed(k)
-	else 
-		if k == 'escape' then 
+	else
+		if k == "escape" then
 			pmenu:activate()
 		end
 	end
