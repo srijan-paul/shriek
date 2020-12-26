@@ -1,10 +1,7 @@
 local janim = require "lib.janim"
-
-local Resource = {Sprite = {}, Canvases = {}, Font = {}}
-
 _G.Sfx = require "audio.sfx"
 
-local la = love.audio
+local Resource = {Sprite = {}, Canvases = {}, Font = {}}
 
 function Resource.load()
 	local rs = Resource.Sprite

@@ -26,7 +26,7 @@ function Inventory:draw()
 	end
 
 	lg.setColor(0, 0, 0, bg_alpha)
-	lg.rectangle("fill", 0, 0, WIN_WIDTH, WIN_HEIGHT)
+	lg.rectangle("fill", 0, 0, DISPLAY_WIDTH, DISPLAY_HEIGHT)
 
 	lg.setColor(1, 1, 1, 1)
 	local x, y = self.x, self.y

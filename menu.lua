@@ -7,11 +7,12 @@ local HIGHLIGHT_COLOR = {sugar.rgb "#ff4d4d"}
 local SELECTED_COLOR = {0, 0, 0}
 
 local bounds = {
-	x = DISPLAY_WIDTH / 4,
-	y = DISPLAY_HEIGHT / 4,
-	w = DISPLAY_WIDTH / 4,
-	h = DISPLAY_HEIGHT / 4
+	w = DISPLAY_WIDTH / 2,
+	h = DISPLAY_HEIGHT / 2,
 }
+bounds.x = (DISPLAY_WIDTH - bounds.w) / 2
+bounds.y = (DISPLAY_HEIGHT - bounds.h) / 2
+
 
 local font = lg.newFont("assets/font/Louis George Cafe.ttf", 22)
 local ypad = font:getHeight() + 4

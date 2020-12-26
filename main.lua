@@ -21,7 +21,7 @@ _G.WIN_WIDTH = 800
 _G.WIN_HEIGHT = 600
 
 _G.Resource = require "resource"
-local game = require("game")
+local game = nil -- required in later down below
 
 -- width and height of the cursor in pixels
 local CURSOR_SCALE_X = 3
@@ -83,6 +83,8 @@ function love.load()
 	_G.Input = require "lib.boipushy.input"()
 	Resource.load()
 	Intro:load()
+
+	game = require "game"
 	game.load()
 
 	Moan.typeSound = Sfx.sounds.type

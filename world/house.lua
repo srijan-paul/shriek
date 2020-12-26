@@ -180,6 +180,14 @@ local function studyroom_init(world)
 		Say {"You", "This garbage can has garbage in it."}
 	end)
 
+	-- clock on the wall
+	Interactable(world, 34, 17, {range = 10}):on_trigger(function ()
+		Sfx.sounds.tick_tock:play()
+		Say {"You", "The time hasn't changed since I left my bedroom.--Are the clocks not working?"}
+	end):on_end(function ()
+		Sfx.sounds.tick_tock:stop()
+	end)
+
 	-- round table at the center of the room
 	Prop(world, 67, 57, {collision = {width = 12, height = 12}})
 	local pager = Interactable(world, 67, 56, {
