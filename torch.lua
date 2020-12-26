@@ -12,10 +12,10 @@ local torch = {
 }
 
 function torch:toggle()
-	if Resource.Sfx.SwitchOn:isPlaying() then
-		Resource.Sfx.SwitchOn:stop()
+	if Sfx.sounds.switch_on:isPlaying() then
+		Sfx.sounds.switch_on:stop()
 	end
-	Resource.Sfx.SwitchOn:play()
+	Sfx.sounds.switch_on:play()
 
 	if self.on == true then
 		self.on = false

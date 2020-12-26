@@ -61,11 +61,11 @@ function Intro:update(dt)
 		self.timer = self.timer - dt
 		if self.timer <= 0 then
 			self.state = STATE_KNOCK
-			Resource.Sfx.Lullaby:stop()
-			Resource.Sfx.Knock3:play()
-			Resource.Sfx.GlassBreak:play()
+			Sfx.music.Lullaby:stop()
+			Sfx.sounds.knock_x3:play()
+			Sfx.sounds.glass_break:play()
 			Timer.after(2, function()
-				Resource.Sfx.Rain:play()
+				Sfx.music.rain:play()
 				Gamestate.start_game()
 			end)
 		end
@@ -76,7 +76,7 @@ function Intro:keypressed(k)
 	if k == "space" then
 		if self.state == STATE_LORE then
 			self.state = STATE_LETTER
-			Resource.Sfx.Lullaby:play()
+			Sfx.music.lullaby:play()
 			self:set_text(Letter)
 		end
 	end

@@ -141,10 +141,10 @@ function Menu:keypressed(k)
 	end
 
 	if play_sel_sound then
-		if Resource.Sfx.ui_nav:isPlaying() then
-			Resource.Sfx.ui_nav:stop()
+		if Sfx.sounds.ui_nav:isPlaying() then
+			Sfx.sounds.ui_nav:stop()
 		end
-		Resource.Sfx.ui_nav:play()
+		Sfx.sounds.ui_nav:play()
 	end
 end
 

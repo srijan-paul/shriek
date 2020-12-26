@@ -26,7 +26,7 @@ local function bedroom_init(world)
 	})
 
 	torch:on_trigger(function()
-		Resource.Sfx.ItemPickup:play()
+		Sfx.sounds.pick_item:play()
 		Timer.after(0.25, function()
 			Dialog:start_seq()
 			GState.add_item(Items.FlashLight)
@@ -62,10 +62,10 @@ local function bedroom_init(world)
 			return
 		end
 		phone_event_finished = true
-		Resource.Sfx.PhoneRing:setLooping(true)
+		Sfx.sounds.phone_ring:setLooping(true)
 		Moan.clearMessages()
 		GState.can_player_move = false
-		Resource.Sfx.PhoneRing:play()
+		Sfx.sounds.phone_ring:play()
 		Say {" ", "(Phone rings)"}
 		Timer.after(2, function()
 			Dialog:start_seq()
@@ -139,7 +139,7 @@ local function entrance_init(world)
 
 	telephone:on_trigger(function ()
 		if not GState.events.phone_rang then return end
-		Resource.Sfx.PhoneRing:stop()
+		Sfx.sounds.phone_ring:stop()
 		Say {"You", "Hello... ?"}
 		RSay {"Phone", "Do your parents tell you bedtime stories?"}
 		Say {"You", "Who is this?"}
@@ -155,13 +155,13 @@ local function entrance_init(world)
 		RSay ({"Phone", "Find your dad's pager in his study room,--And remember - (noise) - n-t dem.. in."}, {
 			oncomplete = function ()
 				GState.set_objective("Find a pager in dad's room.")
-				Resource.Sfx.Beep:play()
+				Sfx.sounds.beep:play()
 			end
 		})
 		RSay {"Phone", "(beep)"}
 
 		telephone:on_trigger(function ()
-			Resource.Sfx.Beep:play()
+			Sfx.sounds.beep:play()
 			RSay {"Phone", "(beep)"}
 			Say {"You", "The phone doesn't seem to be working."}
 		end)
@@ -188,7 +188,7 @@ local function studyroom_init(world)
 		text = {YELLOW, "Pager"}
 	})
 	pager:on_trigger(function()
-		Resource.Sfx.ItemPickup:play()
+		Sfx.sounds.pick_item:play()
 		GState.add_item(Items.Pager)
 		Say {"You", "This must be the pager he was talking about."}
 		RSay {"Pager", "Good job if you've made it here."}

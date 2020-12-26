@@ -16,7 +16,7 @@ function Inventory:load()
 	self.xpad, self.ypad = 4, 4
 	self.x = (SC_WIDTH - self.w) / 2
 	self.y = (SC_HEIGHT - self.h) / 2
-    self.font = Resource.Font.Misc
+	self.font = Resource.Font.Misc
 	self.fheight = self.font:getHeight()
 end
 
@@ -30,27 +30,27 @@ function Inventory:draw()
 
 	lg.setColor(1, 1, 1, 1)
 	local x, y = self.x, self.y
-    lg.setFont(self.font)
-    local selection = nil
+	lg.setFont(self.font)
+	local selection = nil
 	for i, item in ipairs(Gamestate.inventory_items) do
 		if i == self.selected_index then
 			lg.setColor(selected_color[1], selected_color[2], selected_color[3], alpha)
 			lg.rectangle("fill", x - 2, y - 2, self.font:getWidth(item.name) + 4,
 					self.fheight + 2)
-            lg.setColor(0, 0, 0)
-            selection = Gamestate.inventory_items[i]
+			lg.setColor(0, 0, 0)
+			selection = Gamestate.inventory_items[i]
 		else
 			lg.setColor(1, 1, 1)
 		end
 		lg.print(item.name, x, y)
 		y = y + self.fheight + self.ypad
-    end
+	end
 
-    y = y + 50
-    lg.setColor(1, 1, 1, 1)
-    lg.line(x, y, x + self.w, y)
-    y = y + 10
-    love.graphics.printf(selection.info, x, y, self.w)
+	y = y + 50
+	lg.setColor(1, 1, 1, 1)
+	lg.line(x, y, x + self.w, y)
+	y = y + 10
+	love.graphics.printf(selection.info, x, y, self.w)
 end
 
 function Inventory:update(dt)
@@ -68,14 +68,14 @@ function Inventory:keypressed(k)
 	if k == "escape" then
 		assert(self.parent).active_submenu = nil
 		self.is_visible = false
-	elseif k == "down" then
+	elseif k == "down" or k == "s" then
 		self.selected_index = sugar.wrap(self.selected_index + 1, 1,
 				#Gamestate.inventory_items)
-		Resource.Sfx.ui_nav:play()
-	elseif k == "up" then
+		Sfx.sounds.ui_nav:play()
+	elseif k == "up" or k == "w" then
 		self.selected_index = sugar.wrap(self.selected_index - 1, 1,
 				#Gamestate.inventory_items)
-		Resource.Sfx.ui_nav:play()
+		Sfx.sounds.ui_nav:play()
 	end
 end
 

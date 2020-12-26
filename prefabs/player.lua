@@ -21,7 +21,7 @@ function Player:init(world, x, y)
 	self.anim:play("idle_down")
 	self.state = State.IDLE
 	self.footstep_audio = self:add_component(cmp.AudioPlayer,
-			Resource.Sfx.Steps.Wood, true)
+			Sfx.sounds.wood_step, true)
 
 	self.face_dir = Direction.DOWN
 	self.footstep_audio:set_duration(0.4)

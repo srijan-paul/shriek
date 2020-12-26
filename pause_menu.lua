@@ -11,7 +11,7 @@ PMenu:add_option("RESUME", function ()
 end)
 
 PMenu:add_option("QUIT", function ()
-    print "no quit either lol"
+    print "no quit functionality yet"
 end)
 
 return PMenu

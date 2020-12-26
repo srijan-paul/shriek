@@ -85,7 +85,7 @@ function love.load()
 	Intro:load()
 	game.load()
 
-	Moan.typeSound = Resource.Sfx.Type
+	Moan.typeSound = Sfx.sounds.type
 	Moan.font = Resource.Font.Ui
 end
 

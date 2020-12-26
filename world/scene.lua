@@ -27,6 +27,8 @@ function Scene:init()
 	set_cam(self.current_room)
 	self.player = Player(self.current_room.world, 85 / 2, 93 / 2)
 
+	Sfx.music.ambient_1:setLooping(true)
+	Sfx.music.ambient_1:play()
 	-- temporary code
 	GameState.events.torch_found = true
 	-- TODO move this code to the room's script

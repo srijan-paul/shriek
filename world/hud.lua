@@ -52,7 +52,7 @@ function hud:add_hint(text)
 		table.insert(t, text)
 		self:add_message(t, 5, true)
 	end
-	Resource.Sfx.Hint:play()
+	Sfx.sounds.hint:play()
 end
 
 return hud
