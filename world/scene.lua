@@ -21,7 +21,7 @@ end
 
 function Scene:init()
 	GameState.add_item(require "item_list".FlashLight)
-	self.current_room = House.Study
+	self.current_room = House.BedRoom
 	self.current_room.scene = self
 	camera:zoom(ZOOM)
 	set_cam(self.current_room)
@@ -32,17 +32,17 @@ function Scene:init()
 	-- temporary code
 	GameState.events.torch_found = true
 	-- TODO move this code to the room's script
-	-- GameState.can_player_move = false
-	-- Say {"You", "What was that noise just now?"}
-	-- Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
-	-- 	oncomplete = function()
-	-- 		GameState.can_player_move = true
-	-- 		GameState.set_objective("Turn the lights on.")
-	-- 		HUD:add_hint({
-	-- 			"Press [", YELLOW, "E", WHITE, "] to interact with surroundings."
-	-- 		})
-	-- 	end
-	-- })
+	GameState.can_player_move = false
+	Say {"You", "What was that noise just now?"}
+	Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
+		oncomplete = function()
+			GameState.can_player_move = true
+			GameState.set_objective("Turn the lights on.")
+			HUD:add_hint({
+				"Press [", YELLOW, "E", WHITE, "] to interact with surroundings."
+			})
+		end
+	})
 end
 
 function Scene:draw()

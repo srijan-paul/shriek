@@ -61,7 +61,7 @@ function Intro:update(dt)
 		self.timer = self.timer - dt
 		if self.timer <= 0 then
 			self.state = STATE_KNOCK
-			Sfx.music.Lullaby:stop()
+			Sfx.music.lullaby:stop()
 			Sfx.sounds.knock_x3:play()
 			Sfx.sounds.glass_break:play()
 			Timer.after(2, function()
@@ -87,7 +87,7 @@ function Intro:set_text(s)
 end
 
 Intro.ui_layer = function()
-	-- empty but I still need this function cus bad c
+	-- empty but I still need this function cus bad code.
 end
 
 return Intro
