@@ -20,7 +20,6 @@ function Scene.load()
 end
 
 function Scene:init()
-	GameState.add_item(require "item_list".FlashLight)
 	self.current_room = House.BedRoom
 	self.current_room.scene = self
 	camera:zoom(ZOOM)
@@ -30,19 +29,20 @@ function Scene:init()
 	Sfx.music.ambient_1:setLooping(true)
 	Sfx.music.ambient_1:play()
 	-- temporary code
-	GameState.events.torch_found = true
+	-- GameState.events.torch_found = true
+	-- GameState.add_item(require "item_list".FlashLight)
 	-- TODO move this code to the room's script
-	GameState.can_player_move = false
-	Say {"You", "What was that noise just now?"}
-	Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
-		oncomplete = function()
-			GameState.can_player_move = true
-			GameState.set_objective("Turn the lights on.")
-			HUD:add_hint({
-				"Press [", YELLOW, "E", WHITE, "] to interact with surroundings."
-			})
-		end
-	})
+	-- GameState.can_player_move = false
+	-- Say {"You", "What was that noise just now?"}
+	-- Say({"You", "I'm scared... I can't sleep with the lights off anymore."}, {
+		-- oncomplete = function()
+			-- GameState.can_player_move = true
+			-- GameState.set_objective("Turn the lights on.")
+			-- HUD:add_hint({
+				-- "Press [", YELLOW, "E", WHITE, "] to interact with surroundings."
+			-- })
+		-- end
+	-- })
 end
 
 function Scene:draw()
@@ -104,6 +104,9 @@ end
 
 function Scene.MoveEntity(ent, prev_room, next_room)
 	prev_room.world:remove_gameobject(ent)
+	-- TODO make `world:remove_gameobject` call this
+	-- explicity, and implement a separate `world:delete_gameobject`
+	-- that deletes a game object without calling this function.
 	prev_room.world:clear_garbage()
 	next_room.world:add_gameobject(ent)
 end

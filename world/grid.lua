@@ -1,5 +1,5 @@
 local Collider = require "component/collider"
-local Grid = class("Grid")
+local Grid = class "Grid"
 
 local DEFAULT_ROWS, DEFAULT_COLS = 10, 10
 
@@ -111,10 +111,9 @@ function Grid:process_collisions()
 	end
 end
 
-
 local function rect_intersect(x1, y1, w1, h1, x2, y2, w2, h2)
-	return not ((x1 > x2 + w2) or (x1 + w1 < x2) or
-	(y1 + h1 < y2) or (y1 > y2 + h2))
+	return not ((x1 > x2 + w2) or (x1 + w1 < x2) or (y1 + h1 < y2) or
+       			(y1 > y2 + h2))
 end
 
 local grid_query = {
@@ -140,7 +139,7 @@ local grid_query = {
 		return game_objects
 	end,
 
-	["rect"] = function (grid, topleft, w, h)
+	["rect"] = function(grid, topleft, w, h)
 		local x, y = topleft.x, topleft.y
 		local start_row, start_col = grid:toRowCol(x, y)
 		local end_row, end_col = grid:toRowCol(x + w, y + h)
@@ -151,7 +150,7 @@ local grid_query = {
 			for j = start_col, end_col do
 				local cell = grid.cells[i][j]
 				for k = 1, #cell do
-					local c =  cell[k]
+					local c = cell[k]
 					local tl = c:topleft()
 					if rect_intersect(x, y, w, h, tl.x, tl.y, c.width, c.height) then
 						table.insert(game_objects, c.owner)

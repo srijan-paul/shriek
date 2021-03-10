@@ -2,7 +2,6 @@ local GameState = require "gamestate"
 local FloatingText = require "prefabs.floating_text"
 local Pager = require "prefabs.pager"
 
-
 local HINT_COLOR = {sugar.rgb("#0984e3")}
 local HINT_PREFIX = {HINT_COLOR, "HINT: ", WHITE}
 

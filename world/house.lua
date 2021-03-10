@@ -219,6 +219,9 @@ local function studyroom_init(world)
 	Prop(world, 22, 98, {collision = {width = 5, height = 4}})
 end
 
+--- Initializes all the rooms in the house by loading 
+--- their respective entities, event listeners, items, props 
+--- etc.
 function House.load()
 	local LivingRoomImg = Resource.Sprite.LivingRoom
 	House.LivingRoom = Room {

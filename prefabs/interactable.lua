@@ -30,7 +30,7 @@ function Interactable:init(world, x, y, config)
 	-- is finished.
 	self.on_end = nil
 	self.is_player_close = false
-	-- if this is true then the callback isn't even
+	-- if this is true then the callback isn't over 
 	-- when the player is close and presses the Interact button.
 	self.is_callback_running = false
 
@@ -52,6 +52,8 @@ function Interactable:init(world, x, y, config)
 	end
 end
 
+--- @return boolean true if the player is within [self.radius]
+--- distance. False otherwise.
 function Interactable:is_player_in_range()
 	local ents = self.world:cquery(self:get_pos(), self.radius)
 	for _, ent in ipairs(ents) do
@@ -66,6 +68,10 @@ function Interactable:_physics_process(_)
 	if self:is_player_in_range() and (torch.on or not self.vision_triggered) and
 			self.active then
 		if self.is_player_close then
+			--- If player is in range, the [E] key is pressed,
+			--- there is a callback handler available and
+			--- a callback sequence isn't already running, then 
+			--- launch the dialog sequence.
 			if lk.isDown("e") and not self.is_callback_running and self.callback then
 				DialogManager:start(self.callback, self)
 			end

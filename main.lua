@@ -1,4 +1,4 @@
-local shader = require("shader")
+local shader = require "shader"
 local Intro = require "world.intro"
 
 _G.lg = love.graphics
@@ -11,7 +11,7 @@ _G.GREEN = {sugar.rgb("#00b894")}
 _G.WHITE = {1, 1, 1}
 _G.L_RED = {sugar.rgb("#ff7675")}
 
--- more global libraries
+-- globals aren't always bad!
 _G.Moan = require "lib.moan.moan"
 
 -- configuration settings go here:
@@ -21,7 +21,7 @@ _G.WIN_WIDTH = 800
 _G.WIN_HEIGHT = 600
 
 _G.Resource = require "resource"
-local game = nil -- required in later down below
+local game 
 
 -- width and height of the cursor in pixels
 local CURSOR_SCALE_X = 3

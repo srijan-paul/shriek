@@ -20,8 +20,8 @@ function game.load()
 	local house = require "world.house"
 	house.load()
 	Scene.load()
-	game.shading = false
-	game.current_scene = Intro
+	game.shading = false 
+	game.current_scene = Intro 
 	GameState.game = game
 end
 
