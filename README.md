@@ -4,9 +4,9 @@ The story follows Tim, an 8-year old who has to spend a night alone in the house
 his parents are busy in a business meeting outside the city.
 
 ## Screenshots
+![3](media/gif3.gif)
 ![1](media/ss1.png)
 ![2](media/ss2.png)
-![3](media/gif3.gif)
 
 ## Running the game.
 Distributions of the game aren't currently available as it's a work in progress, but you can
